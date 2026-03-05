@@ -23,10 +23,14 @@ Educational Goal:
 TODO: Replace print statements with standard library logging in a later session
 TODO: Any temporary or hardcoded variable or parameter will be imported from config.yml in a later session
 """
-
+# --------------------------------------------------------
+# START STUDENT CODE
+# --------------------------------------------------------
 import pandas as pd
 
 
+
+# target_column is the dependent variable that we want to predict. It is used in cleaning to ensure we don't drop rows with missing target values, which would affect model training.
 def clean_dataframe(df_raw: pd.DataFrame, target_column: str) -> pd.DataFrame:
     """
     Inputs:
@@ -38,27 +42,38 @@ def clean_dataframe(df_raw: pd.DataFrame, target_column: str) -> pd.DataFrame:
     - Cleaning changes data semantics; isolating it makes changes reviewable, testable, and less risky.
     """
     print("[clean_data.clean_dataframe] Cleaning raw dataframe (baseline = identity transform)")
+    if target_column not in df_raw.columns:
+        raise ValueError(f"Target column '{target_column}' not found in dataframe.")
+    df_clean = df_raw.copy()
     #drop rows with missing target values
-    df_clean = df_raw.dropna(subset=[target_column])
+    before_rows = len(df_clean)
+    df_clean = df_clean[df_clean[target_column].notna()].copy()
+    after_rows = len(df_clean)
+    print(f"[clean_data.clean_dataframe] Dropped {before_rows - after_rows} rows with missing target")
 
+    #force target column to be numeric (if not already)
+    df_clean[target_column] = pd.to_numeric(df_clean[target_column], errors='raise')
+    print("[clean_data.clean_dataframe] Target converted to numeric")
 
-    # --------------------------------------------------------
-    # START STUDENT CODE
-    # --------------------------------------------------------
-    # TODO_STUDENT: Paste your notebook cleaning logic here to replace or extend the baseline
-    # Why: Cleaning rules depend on data quirks (missingness, outliers, business rules, leakage rules).
-    # Examples:
-    # 1. Drop rows with missing target values
-    # 2. Normalize text categories, trim whitespace, standardize casing
-    #
-    # Optional forcing function (leave commented)
-    # raise NotImplementedError("Student: You must implement this logic to proceed!")
-    #
-    # Placeholder (Remove this after implementing your code):
+    #detect numeric columns
+    numeric_columns = df_clean.select_dtypes(include=["int64", "float64"]).columns.tolist()
+    numeric_columns = [col for col in numeric_columns if col != target_column]
+
+    #detect categorical columns
+    categorical_columns = df_clean.select_dtypes(include=["object", "category"]).columns.tolist()
+
+    #normalize categorical columns
+    for col in categorical_columns:
+        df_clean[col] = (df_clean[col].astype(str).str.strip().str.lower())
+        print(f"[clean_data.clean_dataframe] Normalized categorical column {col}")
+
     print("Warning: Student has not implemented this section yet")
+
+
+    return df_clean
+
     # --------------------------------------------------------
     # END STUDENT CODE
     # --------------------------------------------------------
-
     # Minimal baseline sanity: ensure target exists if referenced
     if target_column not in df_clean.columns:
