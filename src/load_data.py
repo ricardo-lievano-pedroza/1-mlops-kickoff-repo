@@ -5,3 +5,105 @@ Role: Ingest raw data from sources (CSV, SQL, API).
 Input: Path to file or connection string.
 Output: pandas.DataFrame (Raw).
 """
+
+"""
+Educational Goal:
+- Why this module exists in an MLOps system:
+  Data loading is one of the highest-risk steps (wrong file, wrong schema, wrong environment).
+  A dedicated loader gives you a single, testable place to control and audit data access.
+- Responsibility (separation of concerns):
+  Load raw data from disk. If not present, create a deterministic dummy dataset for scaffolding.
+- Pipeline contract (inputs and outputs):
+  Input: raw_data_path (Path). Output: raw DataFrame with expected columns.
+
+TODO: Replace print statements with standard library logging in a later session
+TODO: Any temporary or hardcoded variable or parameter will be imported from config.yml in a later session
+"""
+
+import os
+from pathlib import Path
+import pandas as pd
+
+from src.utils import load_csv, save_csv
+
+
+def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
+    """
+    Inputs:
+    - raw_data_path: Path to the raw CSV file.
+    Outputs:
+    - df_raw: Raw DataFrame loaded from disk.
+    Why this contract matters for reliable ML delivery:
+    - “Same inputs, same outputs” is the foundation of reproducible ML pipelines.
+    """
+    print(f"[load_data.load_raw_data] Loading raw data from: {raw_data_path}")  # TODO: replace with logging later
+
+    # Treat this as your "example mode" switch for now.
+    # Later, you'll drive this from config.yml or SETTINGS.
+    is_example_config = os.getenv("IS_EXAMPLE_CONFIG", "true").lower() == "true"
+
+    if not raw_data_path.exists():
+        if is_example_config:
+            raw_data_path.parent.mkdir(parents=True, exist_ok=True)
+            dummy = pd.DataFrame(
+                {
+                    "num_feature": [0.0, 1.0, 2.0, 3.0, 4.0, 5.0],
+                    "cat_feature": ["A", "B", "A", "C", "B", "C"],
+                    "target": [0.0, 1.2, 1.9, 3.1, 3.8, 5.2],
+                }
+            )
+
+            print(
+                "\n"
+                "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+                "LOUD WARNING (SCAFFOLDING ONLY):\n"
+                f"- Raw data file was not found at: {raw_data_path}\n"
+                "- A tiny deterministic DUMMY dataset was created with columns:\n"
+                '  ["num_feature", "cat_feature", "target"]\n'
+                "- This is ONLY to ensure the pipeline runs end-to-end immediately.\n"
+                "- Students MUST replace this dataset and update SETTINGS in src/main.py.\n"
+                "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+            )  # TODO: replace with logging later
+
+            save_csv(dummy, raw_data_path)
+        else:
+            raise FileNotFoundError(
+                "\n"
+                "[load_data.load_raw_data] Raw data file not found.\n"
+                f"Expected at: {raw_data_path}\n"
+                "Fix:\n"
+                "1) Put your dataset at that path, OR\n"
+                "2) Update SETTINGS['raw_data_path'] (and later config.yml) to the correct file.\n"
+            )
+
+    df_raw = load_csv(raw_data_path)
+
+    # Empty data check (fail fast)
+    if df_raw is None or df_raw.empty:
+        raise ValueError(
+            "\n"
+            "[load_data.load_raw_data] Loaded dataframe is empty.\n"
+            f"File path: {raw_data_path}\n"
+            "Fix:\n"
+            "- Check the file contents (maybe header-only or wrong delimiter),\n"
+            "- Confirm your export/query actually produced rows.\n"
+        )
+
+    print(f"[load_data.load_raw_data] Loaded shape={df_raw.shape}, columns={list(df_raw.columns)}")  # TODO: replace with logging later
+
+    # --------------------------------------------------------
+    # START STUDENT CODE
+    # --------------------------------------------------------
+    # TODO_STUDENT: Paste your notebook logic here to replace or extend the baseline
+    # Why: Organizations often store data across sources; loading logic can be business-specific.
+    # Examples:
+    # 1. Load multiple CSVs and concatenate them
+    # 2. Filter by a date range or market segment
+    #
+    # Placeholder (Remove this after implementing your code):
+    print("Warning: Student has not implemented this section yet")
+    # --------------------------------------------------------
+    # END STUDENT CODE
+    # --------------------------------------------------------
+
+    return df_raw
