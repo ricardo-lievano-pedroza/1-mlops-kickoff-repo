@@ -55,12 +55,19 @@ def validate_dataframe(df: pd.DataFrame, required_columns: list) -> bool:
 
     total_records = len(df)
 
-    # 1) Missing values ratio per column
-    print("[validate] Missing values summary per column")  # TODO: replace with logging later
-    for col in df.columns:
-        na_count = int(df[col].isna().sum())
-        na_ratio = na_count / total_records
-        print(f"[validate] {col} NA: {na_count}/{total_records} ({na_ratio:.2%})")
+   # 1) Missing values ratio per column
+print("[validate] Missing values summary per column")  # TODO: replace with logging later
+
+for col in df.columns:
+    na_count = int(df[col].isna().sum())
+    na_ratio = na_count / total_records
+    print(f"[validate] {col} NA: {na_count}/{total_records} ({na_ratio:.2%})")
+
+    # Fail if more than 50% missing
+    if na_ratio > 0.5:
+        raise ValueError(
+            f"Validation failed: column '{col}' has too many missing values ({na_ratio:.2%})"
+        )
 
     # 2) Numeric check from Rent to last column, without modifying df
     start_numeric_col = "Rent"
