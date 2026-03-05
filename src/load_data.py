@@ -1,3 +1,9 @@
+import os
+from pathlib import Path
+import pandas as pd
+
+from src import load_csv, save_csv
+
 """
 Module: Data Loader
 -------------------
@@ -9,22 +15,20 @@ Output: pandas.DataFrame (Raw).
 """
 Educational Goal:
 - Why this module exists in an MLOps system:
-  Data loading is one of the highest-risk steps (wrong file, wrong schema, wrong environment).
-  A dedicated loader gives you a single, testable place to control and audit data access.
+  Data loading is one of the highest-risk steps (wrong file, wrong schema,
+    wrong environment).
+  A dedicated loader gives you a single, testable place to control and audit
+    data access.
 - Responsibility (separation of concerns):
-  Load raw data from disk. If not present, create a deterministic dummy dataset for scaffolding.
+  Load raw data from disk. If not present, create a deterministic dummy
+    dataset for scaffolding.
 - Pipeline contract (inputs and outputs):
   Input: raw_data_path (Path). Output: raw DataFrame with expected columns.
 
 TODO: Replace print statements with standard library logging in a later session
-TODO: Any temporary or hardcoded variable or parameter will be imported from config.yml in a later session
+TODO: Any temporary or hardcoded variable or parameter will be imported from
+config.yml in a later session
 """
-
-import os
-from pathlib import Path
-import pandas as pd
-
-from src.utils import load_csv, save_csv
 
 
 def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
@@ -34,13 +38,17 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
     Outputs:
     - df_raw: Raw DataFrame loaded from disk.
     Why this contract matters for reliable ML delivery:
-    - “Same inputs, same outputs” is the foundation of reproducible ML pipelines.
+    - “Same inputs, same outputs” is the foundation of reproducible ML
+      pipelines.
     """
-    print(f"[load_data.load_raw_data] Loading raw data from: {raw_data_path}")  # TODO: replace with logging later
+    print(f"[load_data.load_raw_data] Loading raw data from: {raw_data_path}")
+    # TODO: replace with logging later
 
     # Treat this as your "example mode" switch for now.
     # Later, you'll drive this from config.yml or SETTINGS.
-    is_example_config = os.getenv("IS_EXAMPLE_CONFIG", "true").lower() == "true"
+    is_example_config = (
+        os.getenv("IS_EXAMPLE_CONFIG", "true").lower() == "true"
+    )
 
     if not raw_data_path.exists():
         if is_example_config:
@@ -89,13 +97,16 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
             "- Confirm your export/query actually produced rows.\n"
         )
 
-    print(f"[load_data.load_raw_data] Loaded shape={df_raw.shape}, columns={list(df_raw.columns)}")  # TODO: replace with logging later
-
+    print(
+        f"[load_data.load_raw_data] Loaded shape={df_raw.shape}, columns={list(df_raw.columns)}"
+    )
     # --------------------------------------------------------
     # START STUDENT CODE
     # --------------------------------------------------------
-    # TODO_STUDENT: Paste your notebook logic here to replace or extend the baseline
-    # Why: Organizations often store data across sources; loading logic can be business-specific.
+    # TODO_STUDENT: Paste your notebook logic here to replace or extend the
+    #  baseline
+    # Why: Organizations often store data across sources; loading logic can be
+    #  business-specific.
     # Examples:
     # 1. Load multiple CSVs and concatenate them
     # 2. Filter by a date range or market segment
@@ -105,5 +116,4 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
     # --------------------------------------------------------
     # END STUDENT CODE
     # --------------------------------------------------------
-
     return df_raw
