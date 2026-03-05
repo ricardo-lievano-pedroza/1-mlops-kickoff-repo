@@ -33,10 +33,20 @@ def validate_dataframe(df: pd.DataFrame, required_columns: list) -> bool:
 
     if df.empty:
         raise ValueError("Validation failed: dataframe is empty")
+    print("[validate] Normalizing column names")  # TODO: replace with logging later
+    df.columns = df.columns.str.strip()
 
     missing_required = [c for c in required_columns if c not in df.columns]
     if missing_required:
         raise ValueError(f"Validation failed: missing required columns: {missing_required}")
+        
+    target_column = "Rent"
+
+    if target_column not in df.columns:
+        raise ValueError("Validation failed: target column 'Rent' not found")
+
+    if df[target_column].isna().any():
+        raise ValueError("Validation failed: target column 'Rent' contains missing values")
 
     # --------------------------------------------------------
     # START STUDENT CODE
