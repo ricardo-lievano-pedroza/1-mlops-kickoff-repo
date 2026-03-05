@@ -60,7 +60,7 @@ def clean_dataframe(df_raw: pd.DataFrame, target_column: str) -> pd.DataFrame:
     numeric_columns = [col for col in numeric_columns if col != target_column]
 
     #detect categorical columns
-    categorical_columns = df_clean.select_dtypes(include=["object", "category"]).columns.tolist()
+    categorical_columns = df_clean.select_dtypes(include=["object","string", "category"]).columns.tolist()
 
     #normalize categorical columns
     for col in categorical_columns:
@@ -76,4 +76,3 @@ def clean_dataframe(df_raw: pd.DataFrame, target_column: str) -> pd.DataFrame:
     # END STUDENT CODE
     # --------------------------------------------------------
     # Minimal baseline sanity: ensure target exists if referenced
-    if target_column not in df_clean.columns:
