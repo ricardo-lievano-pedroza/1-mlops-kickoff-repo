@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 import pandas as pd
 
-from src import load_csv, save_csv
+from src.utils import load_csv, save_csv
 
 """
 Module: Data Loader
@@ -44,8 +44,6 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
     print(f"[load_data.load_raw_data] Loading raw data from: {raw_data_path}")
     # TODO: replace with logging later
 
-    # Treat this as your "example mode" switch for now.
-    # Later, you'll drive this from config.yml or SETTINGS.
     is_example_config = (
         os.getenv("IS_EXAMPLE_CONFIG", "true").lower() == "true"
     )
@@ -86,7 +84,7 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
 
     df_raw = load_csv(raw_data_path)
 
-    # Empty data check (fail fast)
+    # Empty data check (fails fast)
     if df_raw is None or df_raw.empty:
         raise ValueError(
             "\n"
