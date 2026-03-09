@@ -1,3 +1,9 @@
+from pathlib import Path
+
+import pandas as pd
+
+from src.utils import load_csv
+
 """
 Educational Goal:
 - Why this module exists in an MLOps system:
@@ -16,13 +22,6 @@ TODO: Any temporary or hardcoded variable or parameter will be imported from
 config.yml in a later session
 """
 
-import os
-from pathlib import Path
-
-import pandas as pd
-
-from src.utils import load_csv, save_csv
-
 
 def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
     """
@@ -38,7 +37,7 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
     print(f"[load_data.load_raw_data] Loading raw data from: {raw_data_path}")
 
     # if not raw_data_path.exists():
-        
+
     #     raw_data_path.parent.mkdir(parents=True, exist_ok=True)
 
     #     dummy = pd.DataFrame(
@@ -58,7 +57,8 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
     #             "A tiny deterministic DUMMY dataset was created with:\n"
     #             'Columns:  ["num_feature", "cat_feature", "target"]\n'
     #             "ONLY to ensure the pipeline runs end-to-end immediately.\n"
-    #             "MUST replace this dataset + update SETTINGS in src/main.py.\n"
+    #             "MUST replace this dataset + update SETTINGS in src/main.py.
+    #             \n"
     #             "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
     #         )
 
