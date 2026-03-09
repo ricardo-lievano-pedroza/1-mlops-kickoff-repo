@@ -5,7 +5,7 @@ from src.infer import run_inference
 
 
 class DummyModel:
-    def _init_(self, preds):
+    def __init__(self, preds):
         self._preds = np.asarray(preds)
 
     def predict(self, X):

@@ -1,26 +1,26 @@
-"""
-Module: Evaluation
-------------------
-Role: Generate metrics and plots for model performance.
-Input: Trained Model + Test Data.
-Output: Metrics dictionary and plots saved to `reports/`.
-"""
-
-"""
-Module: Evaluation
-------------------
-Role: Generate metrics and plots for model performance.
-Input: Trained Model + Test Data.
-Output: Metrics dictionary and plots saved to `reports/`.
-"""
-
 from pathlib import Path
 from typing import Any, Dict, Union
 
 import numpy as np
 import pandas as pd
-#import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+"""
+Module: Evaluation
+------------------
+Role: Generate metrics and plots for model performance.
+Input: Trained Model + Test Data.
+Output: Metrics dictionary and plots saved to `reports/`.
+"""
+
+"""
+Module: Evaluation
+------------------
+Role: Generate metrics and plots for model performance.
+Input: Trained Model + Test Data.
+Output: Metrics dictionary and plots saved to `reports/`.
+"""
 
 
 def evaluate_model(
@@ -46,7 +46,8 @@ def evaluate_model(
     y_pred = np.asarray(model.predict(X_test)).reshape(-1)
 
     if y_true.shape[0] != y_pred.shape[0]:
-        raise ValueError(f"y_test length {len(y_true)} != y_pred length {len(y_pred)}")
+        raise ValueError(
+            f"y_test length {len(y_true)} != y_pred length {len(y_pred)}")
 
     # Metrics
     mae = float(mean_absolute_error(y_true, y_pred))

@@ -33,7 +33,6 @@ def run_inference(model, X_infer: pd.DataFrame) -> pd.DataFrame:
     print("[infer.run_inference] Running inference")
     # TODO: replace with logging later
 
-
     # --------------------------------------------------------
     # START STUDENT CODE
     # --------------------------------------------------------

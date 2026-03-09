@@ -1,11 +1,15 @@
 """
 Educational Goal:
-- Why this module exists in an MLOps system: Training should be a repeatable function with a stable contract.
-- Responsibility (separation of concerns): Fit a Pipeline(preprocess -> model) on training data only.
-- Pipeline contract (inputs and outputs): Inputs are X_train/y_train + preprocessor + problem type; output is a fitted model.
+- Why this module exists in an MLOps system: Training should be a repeatable
+function with a stable contract.
+- Responsibility (separation of concerns): Fit a Pipeline(preprocess -> model)
+on training data only.
+- Pipeline contract (inputs and outputs): Inputs are X_train/y_train +
+preprocessor + problem type; output is a fitted model.
 
 TODO: Replace print statements with standard library logging in a later session
-TODO: Any temporary or hardcoded variable or parameter will be imported from config.yml in a later session
+TODO: Any temporary or hardcoded variable or parameter will be imported from
+config.yml in a later session
 """
 
 import pandas as pd
@@ -13,7 +17,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.pipeline import Pipeline
 
 
-def train_model(X_train: pd.DataFrame, y_train: pd.Series, preprocessor, problem_type: str = "regression"):
+def train_model(X_train: pd.DataFrame, y_train: pd.Series, preprocessor,
+                problem_type: str = "regression"):
     """
     Inputs:
     - X_train: Training features (DataFrame)
@@ -23,9 +28,12 @@ def train_model(X_train: pd.DataFrame, y_train: pd.Series, preprocessor, problem
     Outputs:
     - model: Fitted scikit-learn Pipeline
     Why this contract matters for reliable ML delivery:
-    - Training is repeatable and leakage-resistant because preprocessing is fit only within the Pipeline on training data.
+    - Training is repeatable and leakage-resistant because preprocessing is
+    fit only within the Pipeline on training data.
     """
-    print(f"[train.train_model] Training model for problem_type={problem_type}")  # TODO: replace with logging later
+    print(
+        f"[train.train_model] Training model for problem_type={problem_type}"
+          )  # TODO: replace with logging later
 
     # --------------------------------------------------------
     # START STUDENT CODE
@@ -45,9 +53,7 @@ def train_model(X_train: pd.DataFrame, y_train: pd.Series, preprocessor, problem
     if problem_type == "regression":
         estimator = LinearRegression()
     else:
-        raise ValueError(
-            f"Training failed: problem_type: {problem_type} not supported"
-         )
+        raise ValueError("Training failed: problem_type not supported")
 
     model = Pipeline(
         steps=[

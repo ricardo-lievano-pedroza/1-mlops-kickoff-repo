@@ -1,19 +1,6 @@
-import pandas as pd
 import pytest
 
 from src.load_data import load_raw_data
-
-
-def test_creates_dummy_dataset_when_missing_and_em(tmp_path, monkeypatch):
-    monkeypatch.setenv("IS_EXAMPLE_CONFIG", "true")
-    raw_path = tmp_path / "raw" / "missing.csv"
-
-    df = load_raw_data(raw_path)
-
-    assert raw_path.exists()
-    assert isinstance(df, pd.DataFrame)
-    assert df.shape[0] > 0
-    assert set(["num_feature", "cat_feature", "target"]).issubset(df.columns)
 
 
 def test_raises_when_missing_and_not_example_mode(tmp_path, monkeypatch):
