@@ -1,43 +1,40 @@
-# [Project Name: e.g., Retail Sales Forecasting]
+# Project Name: Rental price forcasting
 test_change
 other_branch_change
 
-**Author:** TODO_STUDENT (Your Group Name or number)  
-**Course:** MLOps: Master in Business Analytics and Data Sciense
+**Author:** Group 6    
+**Course:** MLOps: Master in Business Analytics and Data Sciense  
 **Status:** Session 1 (Initialization)
 
 ---
 
 ## 1. Business Objective
-*Replace this section with your project definition.*
 
-* **The Goal:** What business value does this model create?
-  > *Example: Reduce food waste by 10% by predicting daily bakery demand.*
 
-* **The User:** Who consumes the output and how?
-  > *Example: Store managers receive a weekly PDF report on Monday mornings.*
+* **The Goal:** Accurately predict the rent price of rental properties in the city of Madrid to determine if a listing is overpriced, underpriced or fairly priced.
+
+* **The User:** Tenants who are seaching for rental properties in Madrid.
 
 ---
 
 ## 2. Success Metrics
-*How do we know if the project is successful?*
 
 * **Business KPI (The "Why"):**
-  > *Example: Reduce unsold inventory costs by $5,000/month.*
+  > Increase conversion rate by 5% in one year.
 
 * **Technical Metric (The "How"):**
-  > *Example: Model MAPE (Mean Absolute Percentage Error) < 15% on the test set.*
+  > Model MAPE (Mean Absolute Percentage Error) < 15% on the test set.
 
 * **Acceptance Criteria:**
-  > *Example: The model must outperform the current "moving average" baseline.*
+  > It outperforms the baseline of the district median price model.
 
 ---
 
 ## 3. The Data
 
-* **Source:** (e.g., Company Database, Kaggle CSV, API).
-* **Target Variable:** What specifically are you predicting/ classifying?
-* **Sensitive Info:** Are there emails, credit cards, or any PII (Personally Identifiable Information)?
+* **Source:** CSC with retal prices, location and structural charactersitics of the properties.
+* **Target Variable:** Rental price
+* **Sensitive Info:** None
   > *⚠️ **WARNING:** If the dataset contains sensitive data, it must NEVER be committed to GitHub. Ensure `data/` is in your `.gitignore`.*
 
 ---
