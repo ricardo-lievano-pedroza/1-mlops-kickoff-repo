@@ -24,6 +24,10 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
+try:
+    from sklearn.exceptions import NotFittedError
+except Exception:
+    NotFittedError = Exception
 
 def evaluate_model(model, x_test: pd.DataFrame, y_test: pd.Series, report_dir: Optional[str | Path] = None,) -> Dict[str,float]:
     """
