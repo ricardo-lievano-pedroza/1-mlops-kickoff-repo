@@ -37,12 +37,10 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
     # TODO: replace with logging later
     print(f"[load_data.load_raw_data] Loading raw data from: {raw_data_path}")
 
-    # Example-mode switch (bridge to YAML/SETTINGS later)
     is_example_config = (
         os.getenv("IS_EXAMPLE_CONFIG", "true").lower() == "true"
     )
 
-    # If missing, create scaffold dummy (example mode) OR fail fast (real mode)
     if not raw_data_path.exists():
         if is_example_config:
             raw_data_path.parent.mkdir(parents=True, exist_ok=True)
@@ -79,10 +77,8 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
                 "the correct file.\n"
             )
 
-    # Load via shared utils to keep I/O consistent
     df_raw = load_csv(raw_data_path)
 
-    # Fail-fast empty data
     if df_raw is None or df_raw.empty:
         raise ValueError(
             "[load_data.load_raw_data] Loaded dataframe is empty.\n"
@@ -103,18 +99,16 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
     # --------------------------------------------------------
     # TODO_STUDENT: Paste your notebook logic here to replace or extend the
     # baseline
-    # Why: Organizations often store data across sources; loading logic can be
-    # business-specific
+    # Why: Explain why this step varies per dataset or business context
     # Examples:
-    # 1. Load multiple CSVs and concatenate them
-    # 2. Filter by a date range or market segment
+    # 1. ...
+    # 2. ...
     #
     # Optional forcing function (leave commented)
-    # raise NotImplementedError("Student: You must implement this logic to 
+    # raise NotImplementedError("Student: You must implement this logic to
     # proceed!")
     #
     # Placeholder (Remove this after implementing your code):
-    # TODO: replace with logging later
     print("Warning: Student has not implemented this section yet")
     # --------------------------------------------------------
     # END STUDENT CODE
