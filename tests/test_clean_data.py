@@ -48,3 +48,9 @@ def test_raises_if_target_missing():
 
     with pytest.raises(ValueError):
         clean_dataframe(df, target_column="target")
+
+
+def test_drops_duplicates():
+    df = pd.DataFrame({"city": ["a", "a"], "target": [1, 1]})
+    df_clean = clean_dataframe(df, target_column="target")
+    assert len(df_clean) == 1
