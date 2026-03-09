@@ -33,6 +33,10 @@ def run_inference(model, X_infer: pd.DataFrame) -> pd.DataFrame:
     print("[infer.run_inference] Running inference")
     # TODO: replace with logging later
 
+
+    # --------------------------------------------------------
+    # START STUDENT CODE
+    # --------------------------------------------------------
     if X_infer is None or len(X_infer) == 0:
         return pd.DataFrame({"prediction": []},
                             index=getattr(X_infer, "index", None))
@@ -40,23 +44,6 @@ def run_inference(model, X_infer: pd.DataFrame) -> pd.DataFrame:
     preds = model.predict(X_infer)
     predictions_df = pd.DataFrame({"prediction": preds}, index=X_infer.index)
 
-    # --------------------------------------------------------
-    # START STUDENT CODE
-    # --------------------------------------------------------
-    # TODO_STUDENT: Add post-processing such as thresholding, rounding, or
-    # business rules.
-    # Why: Many real deployments require translating raw outputs into
-    # decision-ready formats.
-    # Examples:
-    # 1. Clip regression predictions to non-negative values
-    # 2. Convert probabilities into risk buckets
-    #
-    # Optional forcing function (leave commented)
-    # raise NotImplementedError("Student: You must implement this logic to
-    # proceed!")
-    #
-    # Placeholder (Remove this after implementing your code):
-    print("Warning: Student has not implemented this section yet")
     # --------------------------------------------------------
     # END STUDENT CODE
     # --------------------------------------------------------
