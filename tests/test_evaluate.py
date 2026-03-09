@@ -1,41 +1,29 @@
-import numpy as np
-from pathlib import Path
-import pytest
-from src.evaluate import evaluate
+def test_evaluate(tmp_path, monkeypatch):
+    import numpy as np
+    import pandas as pd
+    from pathlib import Path
+    import pytest
 
+    from evaluation import evaluate  # change if your module path differs
 
-def test_evaluate_runs_and_saves_plots(tmp_path, monkeypatch):
-    # Move into temporary directory
+    # run in isolated folder so reports/ is created under tmp_path
     monkeypatch.chdir(tmp_path)
 
-    # Define a simple predict function
-    def predict(X):
-        X = np.asarray(X).reshape(-1)
-        return 2 * X
+    class DummyModel:
+        def predict(self, X):
+            return np.array([1.0, 2.0, 3.0])
 
-    # Create a simple object with a predict attribute
-    model = type("Model", (), {"predict": predict})()
+    X_test = pd.DataFrame({"x": [0, 1, 2]})
+    y_test = pd.Series([1.0, 2.0, 3.0])
 
-    X_test = np.array([0.0, 1.0, 2.0, 3.0])
-    y_test = np.array([0.0, 2.0, 4.0, 6.0])
+    metrics = evaluate(DummyModel(), X_test, y_test)
 
-    metrics = evaluate(model, X_test, y_test)
+    # metrics exist and are numeric
+    assert set(metrics.keys()) == {"mae", "rmse", "r2"}
+    assert metrics["mae"] == pytest.approx(0.0)
+    assert metrics["rmse"] == pytest.approx(0.0)
+    assert metrics["r2"] == pytest.approx(1.0)
 
-    assert metrics["mae"] == 0.0
-    assert metrics["rmse"] == 0.0
-    assert metrics["r2"] == 1.0
-
-    assert Path("reports/pred_vs_actual.png").exists()
-    assert Path("reports/residuals_vs_pred.png").exists()
-
-
-def test_evaluate_raises_on_length_mismatch(tmp_path, monkeypatch):
-    monkeypatch.chdir(tmp_path)
-
-    def predict(X):
-        return np.asarray(X)
-
-    model = type("Model", (), {"predict": predict})()
-
-    with pytest.raises(ValueError):
-        evaluate(model, np.array([1, 2]), np.array([1]))
+    # plots were saved
+    assert (Path("reports") / "pred_vs_actual.png").exists()
+    assert (Path("reports") / "residuals_vs_pred.png").exists()

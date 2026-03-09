@@ -6,21 +6,6 @@ Input: Trained Model + Test Data.
 Output: Metrics dictionary and plots saved to `reports/`.
 """
 
-
-from __future__ import annotations
-
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Any, Dict, Optional, Union
-
-import json
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-
-
 """
 Module: Evaluation
 ------------------
@@ -38,9 +23,11 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 
-def evaluate(model: Any,
-             X_test: Union[pd.DataFrame, np.ndarray],
-             y_test: Union[pd.Series, np.ndarray]) -> Dict[str, float]:
+def evaluate(
+    model: Any,
+    X_test: Union[pd.DataFrame, np.ndarray],
+    y_test: Union[pd.Series, np.ndarray],
+) -> Dict[str, float]:
     """
     Evaluate a trained regression model on test data.
 
