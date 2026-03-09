@@ -36,10 +36,18 @@ def train_model(X_train: pd.DataFrame, y_train: pd.Series, preprocessor, problem
     if y_train is None or len(y_train) == 0:
         raise ValueError("Training failed: y_train is empty.")
 
+    if len(y_train) != len(X_train):
+        raise ValueError(
+            f"Training failed: X_trian and y_train are different sized"
+            f" X_train: {len(X_train)}, y_train: {len(y_train)}."
+        )
+
     if problem_type == "regression":
         estimator = LinearRegression()
     else:
-        raise ValueError("Training failed: problem_type not supported")
+        raise ValueError(
+            f"Training failed: problem_type: {problem_type} not supported"
+         )
 
     model = Pipeline(
         steps=[
