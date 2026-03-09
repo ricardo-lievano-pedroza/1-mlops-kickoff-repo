@@ -4,7 +4,7 @@ def test_evaluate(tmp_path, monkeypatch):
     from pathlib import Path
     import pytest
 
-    from evaluation import evaluate  # change if your module path differs
+    from src.evaluate import evaluate  # change if your module path differs
 
     # run in isolated folder so reports/ is created under tmp_path
     monkeypatch.chdir(tmp_path)
