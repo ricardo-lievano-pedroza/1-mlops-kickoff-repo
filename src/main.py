@@ -1,10 +1,4 @@
 """
-Module: Main Pipeline
----------------------
-Role: Orchestrate the entire flow (Load -> Clean -> Validate -> Train -> Evaluate).
-Usage: python -m src.main
-"""
-"""
 Educational Goal:
 - Why this module exists in an MLOps system: Provide a single, readable “pipeline story” that runs end-to-end from raw data to saved artifacts.
 - Responsibility (separation of concerns): Orchestrate steps and materialize artifacts (processed data, trained model, predictions).
@@ -20,14 +14,14 @@ from pathlib import Path
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-import src.validate
+from src.validate import validate_dataframe
 from src.clean_data import clean_dataframe
 from src.evaluate import evaluate_model
 from src.features import get_feature_preprocessor
 from src.infer import run_inference
 from src.load_data import load_raw_data
 from src.train import train_model
-from src.utils import save_csv, save_model
+from src.utils import load_csv, save_csv, save_model
 
 # 2) CONFIGURATION (SETTINGS dictionary bridge)
 # LOUD REMINDER:
@@ -38,18 +32,29 @@ SETTINGS = {
     "problem_type": "regression",
     "random_state": 42,
     "test_size": 0.25,
-    "target_column": "Rent",
+    "target_column": "rent",
     "paths": {
-        "raw_data": "data/raw/dataset.csv",
+        "raw_data": "data/raw/Houses_for_rent.csv",
         "processed_data": "data/processed/clean.csv",
         "model": "models/model.joblib",
         "predictions": "reports/predictions.csv",
+        "inference": "data/inference/Houses_for_rent_inference.csv"
     },
     "features": {
         # Pre-configured to match the dummy CSV created by src/load_data.py
         "quantile_bin": [],  # keep empty by default; dummy numeric feature passes through
-        "categorical_onehot": ["District"],
-        "numeric_passthrough": ["Sq.Mt","Floor","Bedrooms","Outer","Duplex","Cottage","Elevtor","Penthouse","Semidettached"],
+        "categorical_onehot": ["district"],
+        "numeric_passthrough": [
+            "sq.mt",
+            "floor",
+            "bedrooms",
+            "outer",
+            "duplex",
+            "cottage",
+            "elevator",
+            "penthouse",
+            "semidetached"
+            ],
         "n_bins": 3,
     },
 }
@@ -74,6 +79,7 @@ def main():
     Path("data/processed").mkdir(parents=True, exist_ok=True)
     Path("models").mkdir(parents=True, exist_ok=True)
     Path("reports").mkdir(parents=True, exist_ok=True)
+    Path("data/inference").mkdir(parents=True, exist_ok=True)
 
     # --------------------------------------------------------
     # Step 1: Example-config check
@@ -87,6 +93,7 @@ def main():
     processed_path = Path(SETTINGS["paths"]["processed_data"])
     model_path = Path(SETTINGS["paths"]["model"])
     preds_path = Path(SETTINGS["paths"]["predictions"])
+    inference_path = Path(SETTINGS["paths"]["inference"])
 
     target_column = SETTINGS["target_column"]
     problem_type = SETTINGS["problem_type"]
@@ -108,9 +115,15 @@ def main():
         + feature_cfg.get("categorical_onehot", [])
         + feature_cfg.get("numeric_passthrough", [])
     )
-    required_columns = list(dict.fromkeys(configured_feature_cols + [target_column]))
+    required_columns = list(
+        dict.fromkeys(configured_feature_cols + [target_column])
+    )
     
-    df_clean = clean_dataframe(df_raw, target_column=target_column, required_columns = required_columns)
+    df_clean = clean_dataframe(
+        df_raw,
+        target_column=target_column,
+        required_columns=required_columns
+    )
 
     # --------------------------------------------------------
     # Step 4: Save processed CSV (artifact requirement)
@@ -123,7 +136,7 @@ def main():
     # --------------------------------------------------------
     print("[main.main] Validating cleaned data")  # TODO: replace with logging later
 
-    src.validate.validate_dataframe(df_clean, required_columns=required_columns)
+    validate_dataframe(df_clean, required_columns=required_columns)
 
     # --------------------------------------------------------
     # Step 6: Train/test split (BEFORE any feature fitting to prevent leakage)
@@ -157,7 +170,9 @@ def main():
     # --------------------------------------------------------
     print("[main.main] Running fail-fast feature configuration checks")  # TODO: replace with logging later
 
-    missing_cols = [c for c in configured_feature_cols if c not in X_train.columns]
+    missing_cols = [
+        c for c in configured_feature_cols if c not in X_train.columns
+    ]
     if missing_cols:
         raise ValueError(
             f"Feature config error: these configured feature columns are missing from X_train: {missing_cols}. "
@@ -178,9 +193,9 @@ def main():
     # --------------------------------------------------------
     print("[main.main] Building feature preprocessor recipe")  # TODO: replace with logging later
     preprocessor = get_feature_preprocessor(
-        quantile_bin_cols=feature_cfg.get("quantile_bin", []),
-        categorical_onehot_cols=feature_cfg.get("categorical_onehot", []),
-        numeric_passthrough_cols=feature_cfg.get("numeric_passthrough", []),
+        bin_cols=feature_cfg.get("quantile_bin", []),
+        categorical_cols=feature_cfg.get("categorical_onehot", []),
+        numeric_cols=feature_cfg.get("numeric_passthrough", []),
         n_bins=int(feature_cfg.get("n_bins", 3)),
     )
 
@@ -188,7 +203,13 @@ def main():
     # Step 9: Train model (Pipeline fits preprocess+model on TRAIN only)
     # --------------------------------------------------------
     print("[main.main] Training model")  # TODO: replace with logging later
-    model = train_model(X_train=X_train, y_train=y_train, preprocessor=preprocessor, problem_type=problem_type)
+     
+    model = train_model(
+        X_train=X_train,
+        y_train=y_train,
+        preprocessor=preprocessor,
+        problem_type=problem_type
+    )
 
     # --------------------------------------------------------
     # Step 10: Save model (artifact requirement)
@@ -200,32 +221,31 @@ def main():
     # Step 11: Evaluate
     # --------------------------------------------------------
     print("[main.main] Evaluating model")  # TODO: replace with logging later
-    metric_value = evaluate_model(model=model, X_test=X_test, y_test=y_test, problem_type=problem_type)
+    metric_value = evaluate_model(
+        model=model,
+        X_test=X_test,
+        y_test=y_test,
+        problem_type=problem_type
+    )
 
     if problem_type == "regression":
-        print(f"[main.main] Held-out RMSE: {metric_value:.4f}")  # TODO: replace with logging later
+        print(f"[main.main] Held-out RMSE: {metric_value}")  # TODO: replace with logging later
     else:
-        print(f"[main.main] Held-out weighted F1: {metric_value:.4f}")  # TODO: replace with logging later
+        print(f"[main.main] Held-out weighted F1: {metric_value}")  # TODO: replace with logging later
 
     # --------------------------------------------------------
     # Step 12: Inference on example data + save predictions (artifact requirement)
     # --------------------------------------------------------
     print("[main.main] Running inference on held-out test features and saving predictions")  # TODO: replace with logging later
-    df_pred = run_inference(model=model, X_infer=X_test)
+    df_infer = load_csv(inference_path)
+    df_infer_clean = clean_dataframe(
+        df_raw=df_infer,
+        target_column=SETTINGS['target_column'],
+        required_columns=required_columns
+    )
+    X_infer = df_infer_clean[required_columns]
+    df_pred = run_inference(model=model, X_infer=X_infer)
     save_csv(df_pred, preds_path)
-
-    # --------------------------------------------------------
-    # START STUDENT CODE
-    # --------------------------------------------------------
-    # TODO_STUDENT: Extend the orchestration for your real workflow (data versioning, model registry, CI checks).
-    # Why: Orchestration choices depend on your team’s platform and reliability requirements.
-    # Examples:
-    # 1. Add command-line args for paths and problem_type
-    # 2. Add a “train-only” vs “infer-only” mode
-    #
-    # --------------------------------------------------------
-    # END STUDENT CODE
-    # --------------------------------------------------------
 
     print("[main.main] Pipeline complete. Artifacts created:")  # TODO: replace with logging later
     print(f" - {processed_path}")  # TODO: replace with logging later

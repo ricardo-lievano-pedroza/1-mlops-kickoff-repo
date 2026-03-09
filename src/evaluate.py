@@ -19,14 +19,15 @@ from typing import Any, Dict, Union
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 
-def evaluate(
+def evaluate_model(
     model: Any,
     X_test: Union[pd.DataFrame, np.ndarray],
     y_test: Union[pd.Series, np.ndarray],
+    problem_type: str
 ) -> Dict[str, float]:
     """
     Evaluate a trained regression model on test data.
@@ -54,29 +55,29 @@ def evaluate(
 
     metrics: Dict[str, float] = {"mae": mae, "rmse": rmse, "r2": r2}
 
-    # Plot 1: Predicted vs Actual
-    fig, ax = plt.subplots()
-    ax.scatter(y_true, y_pred, alpha=0.5)
-    ax.set_xlabel("Actual")
-    ax.set_ylabel("Predicted")
-    ax.set_title("Predicted vs Actual")
-    mn = float(min(np.min(y_true), np.min(y_pred)))
-    mx = float(max(np.max(y_true), np.max(y_pred)))
-    ax.plot([mn, mx], [mn, mx])
-    fig.tight_layout()
-    fig.savefig(reports_dir / "pred_vs_actual.png", dpi=150)
-    plt.close(fig)
+    # # Plot 1: Predicted vs Actual
+    # fig, ax = plt.subplots()
+    # ax.scatter(y_true, y_pred, alpha=0.5)
+    # ax.set_xlabel("Actual")
+    # ax.set_ylabel("Predicted")
+    # ax.set_title("Predicted vs Actual")
+    # mn = float(min(np.min(y_true), np.min(y_pred)))
+    # mx = float(max(np.max(y_true), np.max(y_pred)))
+    # ax.plot([mn, mx], [mn, mx])
+    # fig.tight_layout()
+    # fig.savefig(reports_dir / "pred_vs_actual.png", dpi=150)
+    # plt.close(fig)
 
-    # Plot 2: Residuals vs Predicted
-    residuals = y_true - y_pred
-    fig, ax = plt.subplots()
-    ax.scatter(y_pred, residuals, alpha=0.5)
-    ax.axhline(0.0)
-    ax.set_xlabel("Predicted")
-    ax.set_ylabel("Residual (Actual - Predicted)")
-    ax.set_title("Residuals vs Predicted")
-    fig.tight_layout()
-    fig.savefig(reports_dir / "residuals_vs_pred.png", dpi=150)
-    plt.close(fig)
+    # # Plot 2: Residuals vs Predicted
+    # residuals = y_true - y_pred
+    # fig, ax = plt.subplots()
+    # ax.scatter(y_pred, residuals, alpha=0.5)
+    # ax.axhline(0.0)
+    # ax.set_xlabel("Predicted")
+    # ax.set_ylabel("Residual (Actual - Predicted)")
+    # ax.set_title("Residuals vs Predicted")
+    # fig.tight_layout()
+    # fig.savefig(reports_dir / "residuals_vs_pred.png", dpi=150)
+    # plt.close(fig)
 
     return metrics

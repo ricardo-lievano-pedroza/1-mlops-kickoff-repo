@@ -42,9 +42,13 @@ def clean_dataframe(df_raw: pd.DataFrame, target_column: str, required_columns: 
     - Cleaning changes data semantics; isolating it makes changes reviewable, testable, and less risky.
     """
     print("[clean_data.clean_dataframe] Cleaning raw dataframe (baseline = identity transform)")
-    if target_column not in df_raw.columns:
-        raise ValueError(f"Target column '{target_column}' not found in dataframe.")
+
+    df_raw.columns = [c.lower() for c in df_raw.columns]
+
     df_clean = df_raw.copy()
+
+    non_required_columns = [col for col in df_clean.columns if col not in required_columns]
+    df_clean.drop(columns=non_required_columns, inplace=True)
 
     # --------------------------------------------------------
     # START STUDENT CODE
@@ -58,8 +62,6 @@ def clean_dataframe(df_raw: pd.DataFrame, target_column: str, required_columns: 
     # Optional forcing function (leave commented)
     # raise NotImplementedError("Student: You must implement this logic to proceed!")
     #remove non_required columns
-    non_required_columns = [col for col in df_clean.columns if col not in required_columns]
-    df_clean.drop(columns=non_required_columns, inplace=True)
 
     #Drop duplicates
     df_clean.drop_duplicates(inplace=True)
@@ -89,6 +91,9 @@ def clean_dataframe(df_raw: pd.DataFrame, target_column: str, required_columns: 
 
     print("Warning: Student has not implemented this section yet")
 
+    if target_column not in df_raw.columns:
+        raise ValueError(f"Target column {target_column} not found in dataframe.")
+    
 
     return df_clean
 

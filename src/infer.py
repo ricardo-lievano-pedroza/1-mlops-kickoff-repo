@@ -43,7 +43,8 @@ def run_inference(model, X_infer: pd.DataFrame) -> pd.DataFrame:
 
     preds = model.predict(X_infer)
     predictions_df = pd.DataFrame({"prediction": preds}, index=X_infer.index)
-
+    print("[infer.run_inference] Predictions")
+    print(predictions_df)
     # --------------------------------------------------------
     # END STUDENT CODE
     # --------------------------------------------------------
