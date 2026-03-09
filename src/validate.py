@@ -6,117 +6,140 @@ Input: pandas.DataFrame.
 Output: Boolean (True if valid) or raises Error.
 """
 
-"""
-Educational Goal:
-- Why this module exists in an MLOps system: Stop the pipeline early when data quality or schema drift would break training or inference
-- Responsibility (separation of concerns): Validate schema and simple column expectations, without transforming data
-- Pipeline contract (inputs and outputs): DataFrame in, True out, raises ValueError on critical failures
-
-TODO: Replace print statements with standard library logging in a later session
-TODO: Any temporary or hardcoded variable or parameter will be imported from config.yml in a later session
-"""
-
+from dataclasses import dataclass
+from typing import Any, Dict, Iterable, Optional, Union
 import pandas as pd
+import pandas.api.types as ptypes
 
 
-# --------------------------------------------------------
-# START STUDENT CODE
-# --------------------------------------------------------
-def validate_dataframe(df: pd.DataFrame, required_columns: list) -> bool:
+class DataValidationError(ValueError):
+    pass
+
+
+def _sample_values(s: pd.Series, mask: pd.Series, n: int = 5) -> list:
+    # Return up to n distinct offending values (excluding NaNs)
+    vals = s[mask].dropna().unique()
+    return list(vals[:n])
+
+
+def _check_dtype(series: pd.Series, expected: Any) -> Optional[str]:
     """
-    Inputs:
-    - df: pandas DataFrame to validate
-    - required_columns: list of column names expected to exist
-    Outputs:
-    - is_valid: True if validation passes
-    Why this contract matters for reliable ML delivery:
-    - Early validation prevents wasted runs and reduces silent failures caused by broken or drifting schemas
+    expected can be:
+      - pandas dtype string ('int64', 'Int64', 'float64', 'string', 'datetime64[ns]')
+      - family token: 'numeric' | 'integer' | 'float' | 'bool' | 'datetime' | 'string' | 'category'
     """
-    print("[validate.validate_dataframe] Validating dataframe")
+    if expected is None:
+        return None
 
-    if df.empty:
-        raise ValueError("Validation failed: dataframe is empty")
+    exp = str(expected)
 
-    print("[validate] Normalizing column names")
-    df.columns = df.columns.str.strip()
+    # type families (more robust than exact dtype equality)
+    if exp == "numeric" and not ptypes.is_numeric_dtype(series.dtype):
+        return f"expected numeric, found {series.dtype}"
+    if exp == "integer" and not ptypes.is_integer_dtype(series.dtype):
+        return f"expected integer, found {series.dtype}"
+    if exp == "float" and not ptypes.is_float_dtype(series.dtype):
+        return f"expected float, found {series.dtype}"
+    if exp in ("bool", "boolean") and not ptypes.is_bool_dtype(series.dtype):
+        return f"expected boolean, found {series.dtype}"
+    if exp == "datetime" and not ptypes.is_datetime64_any_dtype(series.dtype):
+        return f"expected datetime, found {series.dtype}"
+    if exp == "string" and not (ptypes.is_string_dtype(series.dtype) or series.dtype == "object"):
+        return f"expected string/object, found {series.dtype}"
+    if exp == "category" and not ptypes.is_categorical_dtype(series.dtype):
+        return f"expected category, found {series.dtype}"
 
-    missing_required = [c for c in required_columns if c not in df.columns]
-    if missing_required:
-        raise ValueError(f"Validation failed: missing required columns: {missing_required}")
+    # exact dtype string fallback
+    try:
+        if not ptypes.is_dtype_equal(series.dtype, exp):
+            return f"expected dtype {exp}, found {series.dtype}"
+    except Exception:
+        # If exp isn't a recognized dtype string, skip exact check.
+        return None
 
-    target_column = "Rent"
+    return None
 
-    if target_column not in df.columns:
-        raise ValueError("Validation failed: target column 'Rent' not found")
 
-    if df[target_column].isna().any():
-        raise ValueError("Validation failed: target column 'Rent' contains missing values")
+def validate(
+    df: pd.DataFrame,
+    schema: Dict[str, Dict[str, Any]],
+    allow_extra_columns: bool = False,
+) -> bool:
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("Input must be a pandas DataFrame.")
 
-    total_records = len(df)
+    required = set(schema.keys())
+    cols = set(df.columns)
 
-    print("[validate] Missing values summary per column")
+    missing = required - cols
+    if missing:
+        raise DataValidationError(f"Missing required columns: {sorted(missing)}")
 
-    for col in df.columns:
-        na_count = int(df[col].isna().sum())
-        na_ratio = na_count / total_records
-        print(f"[validate] {col} NA: {na_count}/{total_records} ({na_ratio:.2%})")
+    if not allow_extra_columns:
+        extra = cols - required
+        if extra:
+            raise DataValidationError(f"Unexpected columns present: {sorted(extra)}")
 
-        if na_ratio > 0.5:
-            raise ValueError(
-                f"Validation failed: column '{col}' has too many missing values ({na_ratio:.2%})"
-            )
+    errors: list[str] = []
 
-    start_numeric_col = "Rent"
-    start_numeric_idx = df.columns.get_loc(start_numeric_col)
-    numeric_cols = list(df.columns[start_numeric_idx:])
+    for col, rules in schema.items():
+        s = df[col]
+        null_mask = s.isna()
+        non_null = s[~null_mask]
 
-    def _to_numeric_temp(series: pd.Series) -> pd.Series:
-        s = series.copy()
+        # nullability
+        nullable = bool(rules.get("nullable", True))
+        if not nullable and null_mask.any():
+            errors.append(f"[{col}] non-nullable but has {int(null_mask.sum())} nulls")
 
-        s_str = (
-            s.astype(str)
-            .str.strip()
-            .replace({"": pd.NA, "nan": pd.NA, "None": pd.NA})
-            .astype("string")
-        )
+        # dtype
+        dtype_err = _check_dtype(s, rules.get("dtype"))
+        if dtype_err:
+            errors.append(f"[{col}] {dtype_err}")
 
-        s_str = s_str.str.replace(".", "", regex=False)
-        s_str = s_str.str.replace(",", ".", regex=False)
+        # ranges (only on non-null)
+        if "min" in rules:
+            mn = rules["min"]
+            bad = non_null < mn
+            if bad.any():
+                sample = _sample_values(non_null, bad)
+                errors.append(
+                    f"[{col}] {int(bad.sum())} values < {mn}; sample={sample}"
+                )
 
-        s_num = pd.to_numeric(s_str, errors="coerce")
-        return s_num
+        if "max" in rules:
+            mx = rules["max"]
+            bad = non_null > mx
+            if bad.any():
+                sample = _sample_values(non_null, bad)
+                errors.append(
+                    f"[{col}] {int(bad.sum())} values > {mx}; sample={sample}"
+                )
 
-    print("[validate] Checking numeric columns from Rent to last column")
+        # allowed values (ignore nulls if nullable=True)
+        if "allowed_values" in rules:
+            allowed: Iterable[Any] = rules["allowed_values"]
+            bad = ~non_null.isin(list(allowed))
+            if bad.any():
+                sample = _sample_values(non_null, bad)
+                errors.append(
+                    f"[{col}] {int(bad.sum())} invalid values; sample={sample}"
+                )
 
-    for col in numeric_cols:
-        s_num = _to_numeric_temp(df[col])
+        # uniqueness
+        if rules.get("unique", False):
+            dup = non_null.duplicated()
+            if dup.any():
+                sample = _sample_values(non_null, dup)
+                errors.append(f"[{col}] expected unique but has duplicates; sample={sample}")
 
-        non_null_count = int(df[col].notna().sum())
-        converted_non_null_count = int(s_num.notna().sum())
+        # missingness threshold
+        if "max_null_frac" in rules:
+            frac = float(null_mask.mean())
+            if frac > float(rules["max_null_frac"]):
+                errors.append(f"[{col}] null fraction {frac:.3f} exceeds {rules['max_null_frac']}")
 
-        if non_null_count > 0 and converted_non_null_count == 0:
-            raise ValueError(
-                f"Validation failed: column '{col}' must be numeric"
-            )
-
-    start_binary_col = "Outer"
-    start_binary_idx = df.columns.get_loc(start_binary_col)
-    binary_cols = list(df.columns[start_binary_idx:])
-
-    print("[validate] Checking binary columns from Outer to last column")
-
-    for col in binary_cols:
-        s_num = _to_numeric_temp(df[col])
-        s_non_null = s_num.dropna()
-
-        if s_non_null.empty:
-            raise ValueError(f"Validation failed: binary column '{col}' has only missing values")
-
-        unique_vals = set(s_non_null.unique().tolist())
-
-        if not unique_vals.issubset({0, 1}):
-            raise ValueError(
-                f"Validation failed: column '{col}' must be binary 0/1"
-            )
+    if errors:
+        raise DataValidationError("Validation failed:\n- " + "\n- ".join(errors))
 
     return True
