@@ -42,15 +42,23 @@ def validate_dataframe(df: pd.DataFrame, required_columns: list) -> bool:
 
     missing_required = [c for c in required_columns if c not in df.columns]
     if missing_required:
-        raise ValueError(f"Validation failed: missing required columns: {missing_required}")
+        missing_str = ", ".join(missing_required)
+        raise ValueError(
+            f"Validation failed: missing required columns: {missing_str}"
+        )
 
     target_column = "Rent"
 
     if target_column not in df.columns:
-        raise ValueError("Validation failed: target column 'Rent' not found")
+        raise ValueError(
+            "Validation failed: target column 'Rent' not found"
+        )
 
     if df[target_column].isna().any():
-        raise ValueError("Validation failed: target column 'Rent' contains missing values")
+        raise ValueError(
+            "Validation failed: target column 'Rent' "
+            "contains missing values"
+        )
 
     total_records = len(df)
 
@@ -59,11 +67,16 @@ def validate_dataframe(df: pd.DataFrame, required_columns: list) -> bool:
     for col in df.columns:
         na_count = int(df[col].isna().sum())
         na_ratio = na_count / total_records
-        print(f"[validate] {col} NA: {na_count}/{total_records} ({na_ratio:.2%})")
+        summary = (
+            f"[validate] {col} NA: {na_count}/{total_records} "
+            f"({na_ratio:.2%})"
+        )
+        print(summary)
 
         if na_ratio > 0.5:
             raise ValueError(
-                f"Validation failed: column '{col}' has too many missing values ({na_ratio:.2%})"
+                f"Validation failed: column '{col}' "
+                f"has too many missing values ({na_ratio:.2%})"
             )
 
     start_numeric_col = "Rent"
@@ -110,7 +123,10 @@ def validate_dataframe(df: pd.DataFrame, required_columns: list) -> bool:
         s_non_null = s_num.dropna()
 
         if s_non_null.empty:
-            raise ValueError(f"Validation failed: binary column '{col}' has only missing values")
+            raise ValueError(
+                f"Validation failed: binary column '{col}' "
+                "has only missing values"
+            )
 
         unique_vals = set(s_non_null.unique().tolist())
 
