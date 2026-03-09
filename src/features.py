@@ -1,4 +1,12 @@
 """
+Module: Feature Engineering
+---------------------------
+Role: Define the transformation "recipe" (binning, encoding, scaling) to be bundled with the model.
+Input: Configuration (lists of column names).
+Output: scikit-learn ColumnTransformer object.
+"""
+
+"""
 Educational Goal:
 - Why this module exists in an MLOps system: Feature logic must be repeatable across training and inference to avoid training/serving skew.
 - Responsibility (separation of concerns): Define a preprocessing “recipe” without fitting it (fit happens only on train split).
