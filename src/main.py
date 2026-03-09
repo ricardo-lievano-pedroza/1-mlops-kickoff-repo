@@ -34,11 +34,11 @@ from src.utils import save_csv, save_model
 # This SETTINGS dict is a temporary bridge until config.yml is introduced.
 # You MUST map these fields to your real dataset columns and business requirements.
 SETTINGS = {
-    "is_example_config": True,
-    "problem_type": "regression",  # "regression" or "classification"
+    "is_example_config": False,
+    "problem_type": "regression",
     "random_state": 42,
     "test_size": 0.25,
-    "target_column": "target",
+    "target_column": "Rent",
     "paths": {
         "raw_data": "data/raw/dataset.csv",
         "processed_data": "data/processed/clean.csv",
@@ -48,8 +48,8 @@ SETTINGS = {
     "features": {
         # Pre-configured to match the dummy CSV created by src/load_data.py
         "quantile_bin": [],  # keep empty by default; dummy numeric feature passes through
-        "categorical_onehot": ["cat_feature"],
-        "numeric_passthrough": ["num_feature"],
+        "categorical_onehot": ["District"],
+        "numeric_passthrough": ["Sq.Mt","Floor","Bedrooms","Outer","Duplex","Cottage","Elevtor","Penthouse","Semidettached"],
         "n_bins": 3,
     },
 }
@@ -101,7 +101,16 @@ def main():
     # Step 3: Clean
     # --------------------------------------------------------
     print("[main.main] Cleaning data")  # TODO: replace with logging later
-    df_clean = clean_dataframe(df_raw, target_column=target_column)
+
+    feature_cfg = SETTINGS["features"]
+    configured_feature_cols = (
+        feature_cfg.get("quantile_bin", [])
+        + feature_cfg.get("categorical_onehot", [])
+        + feature_cfg.get("numeric_passthrough", [])
+    )
+    required_columns = list(dict.fromkeys(configured_feature_cols + [target_column]))
+    
+    df_clean = clean_dataframe(df_raw, target_column=target_column, required_columns = required_columns)
 
     # --------------------------------------------------------
     # Step 4: Save processed CSV (artifact requirement)
@@ -113,13 +122,7 @@ def main():
     # Step 5: Validate
     # --------------------------------------------------------
     print("[main.main] Validating cleaned data")  # TODO: replace with logging later
-    feature_cfg = SETTINGS["features"]
-    configured_feature_cols = (
-        feature_cfg.get("quantile_bin", [])
-        + feature_cfg.get("categorical_onehot", [])
-        + feature_cfg.get("numeric_passthrough", [])
-    )
-    required_columns = list(dict.fromkeys(configured_feature_cols + [target_column]))
+
     src.validate.validate_dataframe(df_clean, required_columns=required_columns)
 
     # --------------------------------------------------------
@@ -220,11 +223,6 @@ def main():
     # 1. Add command-line args for paths and problem_type
     # 2. Add a “train-only” vs “infer-only” mode
     #
-    # Optional forcing function (leave commented)
-    # raise NotImplementedError("Student: You must implement this logic to proceed!")
-    #
-    # Placeholder (Remove this after implementing your code):
-    print("Warning: Student has not implemented this section yet")
     # --------------------------------------------------------
     # END STUDENT CODE
     # --------------------------------------------------------
