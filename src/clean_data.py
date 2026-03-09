@@ -31,7 +31,7 @@ import pandas as pd
 
 
 # target_column is the dependent variable that we want to predict. It is used in cleaning to ensure we don't drop rows with missing target values, which would affect model training.
-def clean_dataframe(df_raw: pd.DataFrame, target_column: str) -> pd.DataFrame:
+def clean_dataframe(df_raw: pd.DataFrame, target_column: str, required_columns: list ) -> pd.DataFrame:
     """
     Inputs:
     - df_raw: Raw pandas DataFrame
@@ -57,6 +57,9 @@ def clean_dataframe(df_raw: pd.DataFrame, target_column: str) -> pd.DataFrame:
     #
     # Optional forcing function (leave commented)
     # raise NotImplementedError("Student: You must implement this logic to proceed!")
+    #remove non_required columns
+    non_required_columns = [col for col in df_clean.columns if col not in required_columns]
+    df_clean.drop(columns=non_required_columns, inplace=True)
 
     #Drop duplicates
     df_clean.drop_duplicates(inplace=True)
