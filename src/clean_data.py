@@ -28,8 +28,6 @@ TODO: Any temporary or hardcoded variable or parameter will be imported from con
 # --------------------------------------------------------
 import pandas as pd
 
-
-
 # target_column is the dependent variable that we want to predict. It is used in cleaning to ensure we don't drop rows with missing target values, which would affect model training.
 def clean_dataframe(df_raw: pd.DataFrame, target_column: str, required_columns: list ) -> pd.DataFrame:
     """
