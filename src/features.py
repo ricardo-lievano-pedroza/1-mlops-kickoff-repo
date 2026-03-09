@@ -19,79 +19,76 @@ TODO: Any temporary or hardcoded variable or parameter will be imported from con
 from typing import List, Optional
 
 from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import RobustScaler, OneHotEncoder, KBinsDiscretizer
+from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder
 
 
 def get_feature_preprocessor(
-    quantile_bin_cols: Optional[List[str]] = None,
-    categorical_onehot_cols: Optional[List[str]] = None,
-    numeric_passthrough_cols: Optional[List[str]] = None,
+    bin_cols: Optional[List[str]] = None,
+    categorical_cols: Optional[List[str]] = None,
+    numeric_cols: Optional[List[str]] = None,
     n_bins: int = 3,
 ):
     """
     Inputs:
-    - quantile_bin_cols: Numeric columns to discretize into quantile bins
-    - categorical_onehot_cols: Categorical columns to one-hot encode
-    - numeric_passthrough_cols: Numeric columns to pass through unchanged
-    - n_bins: Number of quantile bins
+    - quantile_bin_cols: Optional[List[str]] numeric columns to quantile-bin
+    - categorical_onehot_cols: Optional[List[str]] categorical columns to one-hot encode
+    - numeric_passthrough_cols: Optional[List[str]] numeric columns to pass through unchanged
+    - n_bins: number of quantile bins for KBinsDiscretizer
     Outputs:
-    - preprocessor: Unfitted sklearn ColumnTransformer
+    - ColumnTransformer preprocessing object (NOT fitted)
     Why this contract matters for reliable ML delivery:
-    - Keeping this as an unfitted recipe prevents leakage and ensures identical transforms at train and serve time.
+    - A “recipe-only” preprocessor ensures transforms are fit only on training data inside the Pipeline.
     """
-    print("[features.get_feature_preprocessor] Building ColumnTransformer recipe (unfitted)")  # TODO: replace with logging later
-
-    quantile_bin_cols = quantile_bin_cols or []
-    categorical_onehot_cols = categorical_onehot_cols or []
-    numeric_passthrough_cols = numeric_passthrough_cols or []
-
-    # Robust OneHotEncoder creation across sklearn versions
-    try:
-        ohe = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
-    except TypeError:
-        ohe = OneHotEncoder(handle_unknown="ignore", sparse=False)
-
-    quantile_pipe = Pipeline(
-        steps=[
-            ("kbins", KBinsDiscretizer(n_bins=n_bins, encode="onehot-dense", strategy="quantile")),
-        ]
-    )
-
-    cat_pipe = Pipeline(
-        steps=[
-            ("onehot", ohe),
-        ]
-    )
+    print("[features.get_feature_preprocessor] Building ColumnTransformer feature recipe")  # TODO: replace with logging later
+  
+    bin_cols = bin_cols or []
+    categorical_cols = categorical_cols or []
+    numeric_cols = numeric_cols or []
 
     transformers = []
-    if quantile_bin_cols:
-        transformers.append(("quantile_bin", quantile_pipe, quantile_bin_cols))
-    if categorical_onehot_cols:
-        transformers.append(("categorical_onehot", cat_pipe, categorical_onehot_cols))
-    if numeric_passthrough_cols:
-        transformers.append(("numeric_passthrough", "passthrough", numeric_passthrough_cols))
 
-    preprocessor = ColumnTransformer(
-        transformers=transformers,
-        remainder="drop",
-    )
+    if bin_cols:
+        numeric_bin_pipeline = Pipeline(
+            steps=[
+                ("impute", SimpleImputer(strategy="mean")),
+                (
+                    "bin",
+                    KBinsDiscretizer(
+                        n_bins=n_bins,
+                        encode="onehot-dense",
+                        strategy="quantile"
+                    )
+                ),
+            ]
+        )
+        transformers.append(
+            ("quantile_bin", numeric_bin_pipeline, bin_cols)
+        )
 
-    # --------------------------------------------------------
-    # START STUDENT CODE
-    # --------------------------------------------------------
-    # TODO_STUDENT: Modify feature recipe (scaling, imputation, text, interactions) as needed
-    # Why: Feature engineering depends on data modality and business goals
-    # Examples:
-    # 1. Add SimpleImputer for missing numeric values
-    # 2. Add StandardScaler for linear models
-    #
-    # Optional forcing function (leave commented)
-    # raise NotImplementedError("Student: You must implement this logic to proceed!")
-    #
+    if categorical_cols:
+        try:
+            ohe = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
+        except TypeError:
+            ohe = OneHotEncoder(handle_unknown="ignore", sparse=False)
 
-    # --------------------------------------------------------
-    # END STUDENT CODE
-    # --------------------------------------------------------
+        categorical_pipeline = Pipeline(
+            steps=[
+                ("impute", SimpleImputer(strategy="constant", fill_value="__MISSING__")),
+                ("onehot", ohe),
+            ]
+        )
+        transformers.append(("categorical_onehot", categorical_pipeline, categorical_cols))
 
+    if numeric_cols:
+        numeric_pipeline = Pipeline(
+            steps=[
+                ("impute", SimpleImputer(strategy="median")),
+                ("scale", RobustScaler()),
+            ]
+        )
+        transformers.append(("numeric_scaler", numeric_pipeline, numeric_cols))
+
+    preprocessor = ColumnTransformer(transformers=transformers, remainder="drop")
     return preprocessor
