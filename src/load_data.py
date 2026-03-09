@@ -1,15 +1,19 @@
 """
 Educational Goal:
 - Why this module exists in an MLOps system:
-  Data loading is one of the highest-risk steps (wrong file, wrong schema, wrong environment).
-  A dedicated loader gives you a single, testable place to control and audit data access.
+  Data loading is one of the highest-risk steps (wrong file, wrong schema,
+  wrong environment).
+  A dedicated loader gives you a single, testable place to control and audit
+  data access.
 - Responsibility (separation of concerns):
-  Load raw data from disk. If not present, create a deterministic dummy dataset for scaffolding.
+  Load raw data from disk. If not present, create a deterministic dummy
+  dataset for scaffolding.
 - Pipeline contract (inputs and outputs):
   Input: raw_data_path (Path). Output: raw DataFrame with expected columns.
 
 TODO: Replace print statements with standard library logging in a later session
-TODO: Any temporary or hardcoded variable or parameter will be imported from config.yml in a later session
+TODO: Any temporary or hardcoded variable or parameter will be imported from
+config.yml in a later session
 """
 
 import os
@@ -27,12 +31,16 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
     Outputs:
     - df_raw: Raw DataFrame loaded from disk.
     Why this contract matters for reliable ML delivery:
-    - “Same inputs, same outputs” is the foundation of reproducible ML pipelines.
+    - “Same inputs, same outputs” is the foundation of reproducible ML
+      pipelines.
     """
-    print(f"[load_data.load_raw_data] Loading raw data from: {raw_data_path}")  # TODO: replace with logging later
+    # TODO: replace with logging later
+    print(f"[load_data.load_raw_data] Loading raw data from: {raw_data_path}")
 
     # Example-mode switch (bridge to YAML/SETTINGS later)
-    is_example_config = os.getenv("IS_EXAMPLE_CONFIG", "true").lower() == "true"
+    is_example_config = (
+        os.getenv("IS_EXAMPLE_CONFIG", "true").lower() == "true"
+    )
 
     # If missing, create scaffold dummy (example mode) OR fail fast (real mode)
     if not raw_data_path.exists():
@@ -47,27 +55,28 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
                 }
             )
 
+            # TODO: replace with logging later
             print(
                 "\n"
-                "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+                "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
                 "LOUD WARNING (SCAFFOLDING ONLY):\n"
                 f"- Raw data file was not found at: {raw_data_path}\n"
-                "- A tiny deterministic DUMMY dataset was created with columns:\n"
-                '  ["num_feature", "cat_feature", "target"]\n'
-                "- This is ONLY to ensure the pipeline runs end-to-end immediately.\n"
-                "- Students MUST replace this dataset and update SETTINGS in src/main.py.\n"
-                "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
-            )  # TODO: replace with logging later
+                "A tiny deterministic DUMMY dataset was created with:\n"
+                'Columns:  ["num_feature", "cat_feature", "target"]\n'
+                "ONLY to ensure the pipeline runs end-to-end immediately.\n"
+                "MUST replace this dataset + update SETTINGS in src/main.py.\n"
+                "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+                )
 
             save_csv(dummy, raw_data_path)
         else:
             raise FileNotFoundError(
-                "\n"
                 "[load_data.load_raw_data] Raw data file not found.\n"
                 f"Expected at: {raw_data_path}\n"
                 "Fix:\n"
                 "1) Put your dataset at that path, OR\n"
-                "2) Update SETTINGS['raw_data_path'] (and later config.yml) to the correct file.\n"
+                "2) Update SETTINGS['raw_data_path'] (and later config.yml) to"
+                "the correct file.\n"
             )
 
     # Load via shared utils to keep I/O consistent
@@ -76,31 +85,36 @@ def load_raw_data(raw_data_path: Path) -> pd.DataFrame:
     # Fail-fast empty data
     if df_raw is None or df_raw.empty:
         raise ValueError(
-            "\n"
             "[load_data.load_raw_data] Loaded dataframe is empty.\n"
             f"File path: {raw_data_path}\n"
             "Fix:\n"
-            "- Check the file contents (maybe header-only or wrong delimiter),\n"
-            "- Confirm your export/query actually produced rows.\n"
+            "Check the file contents (maybe header-only or wrong delimiter)\n"
+            "Confirm your export/query actually produced rows.\n"
         )
 
+    # TODO: replace with logging later
     print(
-        f"[load_data.load_raw_data] Loaded shape={df_raw.shape}, columns={list(df_raw.columns)}"
-    )  # TODO: replace with logging later
+        "[load_data.load_raw_data] Loaded shape=%s, columns=%s"
+        % (df_raw.shape, list(df_raw.columns))
+    )
 
     # --------------------------------------------------------
     # START STUDENT CODE
     # --------------------------------------------------------
-    # TODO_STUDENT: Paste your notebook logic here to replace or extend the baseline
-    # Why: Organizations often store data across sources; loading logic can be business-specific
+    # TODO_STUDENT: Paste your notebook logic here to replace or extend the
+    # baseline
+    # Why: Organizations often store data across sources; loading logic can be
+    # business-specific
     # Examples:
     # 1. Load multiple CSVs and concatenate them
     # 2. Filter by a date range or market segment
     #
     # Optional forcing function (leave commented)
-    # raise NotImplementedError("Student: You must implement this logic to proceed!")
+    # raise NotImplementedError("Student: You must implement this logic to 
+    # proceed!")
     #
     # Placeholder (Remove this after implementing your code):
+    # TODO: replace with logging later
     print("Warning: Student has not implemented this section yet")
     # --------------------------------------------------------
     # END STUDENT CODE

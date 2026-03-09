@@ -4,7 +4,7 @@ import pytest
 from src.load_data import load_raw_data
 
 
-def test_creates_dummy_dataset_when_missing_and_example_mode(tmp_path, monkeypatch):
+def test_creates_dummy_dataset_when_missing_and_em(tmp_path, monkeypatch):
     monkeypatch.setenv("IS_EXAMPLE_CONFIG", "true")
     raw_path = tmp_path / "raw" / "missing.csv"
 
