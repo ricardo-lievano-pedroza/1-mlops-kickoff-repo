@@ -12,5 +12,4 @@ dependencies:
   - ipykernel
   - pytest
   - pytest-cov
-  - pips
   - matplotlib
