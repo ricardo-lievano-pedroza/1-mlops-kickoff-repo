@@ -45,11 +45,13 @@ def clean_dataframe(df_raw: pd.DataFrame, target_column: str) -> pd.DataFrame:
     if target_column not in df_raw.columns:
         raise ValueError(f"Target column '{target_column}' not found in dataframe.")
     df_clean = df_raw.copy()
+    df_clean.drop_duplicates(inplace=True)
     #drop rows with missing target values
     before_rows = len(df_clean)
     df_clean = df_clean[df_clean[target_column].notna()].copy()
     after_rows = len(df_clean)
     print(f"[clean_data.clean_dataframe] Dropped {before_rows - after_rows} rows with missing target")
+    df_clean.reset_index(inplace=True)
 
     #force target column to be numeric (if not already)
     df_clean[target_column] = pd.to_numeric(df_clean[target_column], errors='raise')
