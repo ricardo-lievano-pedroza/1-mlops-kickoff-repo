@@ -1,0 +1,105 @@
+_wandb:
+    value:
+        cli_version: 0.25.1
+        e:
+            h4kijw9m79jc91dlx3mo7niivp2jjtwg:
+                cpu_count: 8
+                cpu_count_logical: 16
+                disk:
+                    /:
+                        total: "509722226688"
+                        used: "264648171520"
+                email: ricardolievano@hotmail.com
+                executable: C:\Users\ricar\anaconda3\envs\mlops-student-env\python.exe
+                git:
+                    commit: db9076896fda1cf724ccfd248961bedca406e235
+                    remote: https://github.com/ricardo-lievano-pedroza/1-mlops-kickoff-repo.git
+                host: RLP
+                memory:
+                    total: "14861852672"
+                os: Windows-11-10.0.26200-SP0
+                program: -m src.main
+                python: CPython 3.14.3
+                root: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo
+                startedAt: "2026-03-26T11:35:21.083178Z"
+                writerId: h4kijw9m79jc91dlx3mo7niivp2jjtwg
+        m: []
+        python_version: 3.14.3
+        t:
+            "1":
+                - 5
+                - 53
+            "2":
+                - 5
+                - 53
+            "3":
+                - 2
+                - 13
+                - 15
+                - 16
+                - 62
+            "4": 3.14.3
+            "5": 0.25.1
+            "8":
+                - 3
+            "12": 0.25.1
+            "13": windows-amd64
+features:
+    value:
+        categorical_onehot:
+            - district
+        n_bins: 3
+        non_negative:
+            - sq.mt
+            - bedrooms
+            - outer
+            - duplex
+            - cottage
+            - elevator
+            - penthouse
+            - semidetached
+        numeric_passthrough:
+            - sq.mt
+            - floor
+            - bedrooms
+            - outer
+            - duplex
+            - cottage
+            - elevator
+            - penthouse
+            - semidetached
+        quantile_cols: []
+logging:
+    value:
+        level: INFO
+paths:
+    value:
+        inference_data: data/inference/Houses_for_rent_inference.csv
+        log_file: logs/pipeline.log
+        model_artifact: models/model.joblib
+        predictions_artifact: reports/predictions.csv
+        processed_data: data/processed/clean.csv
+        raw_data: data/raw/Houses_for_rent.csv
+problem:
+    value:
+        problem_type: regression
+        target_column: rent
+split:
+    value:
+        random_seed: 42
+        test_size: 0.2
+wandb:
+    value:
+        enabled: true
+        group: baselines
+        job_type: baseline
+        log_predictions: true
+        log_predictions_table: true
+        log_processed_data: true
+        model_artifact_name: rent_prediction_model
+        name: 00.linear_regression
+        notes: Baseline linear regression
+        predictions_table_rows: 200
+        project: madrid-rentals-prediction
+        tags:
+            - baseline

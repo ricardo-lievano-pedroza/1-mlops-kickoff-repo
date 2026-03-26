@@ -21,7 +21,7 @@ split:
   random_seed: 42
 
 features:
-  quantile_bin: []
+  quantile_cols: []
   categorical_onehot:
     - "district"
   numeric_passthrough:
@@ -44,3 +44,19 @@ features:
     - "elevator"
     - "penthouse"
     - "semidetached"
+wandb:
+  enabled: true
+  project: "madrid-rentals-prediction"
+# Experiment controls
+  name: "00.linear_regression"
+  job_type: "baseline"
+  group: "baselines"
+  tags: ["baseline"]
+  notes: "Baseline linear regression"
+#-----------------------------------------
+  model_artifact_name: "rent_prediction_model"
+  log_processed_data: true
+  log_predictions: true
+
+  log_predictions_table: true
+  predictions_table_rows: 200

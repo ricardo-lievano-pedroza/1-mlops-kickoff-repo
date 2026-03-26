@@ -1,0 +1,93 @@
+2026-03-26 12:19:10 | INFO | __main__ | Initialized W&B run | name=00.linear_regression | project=madrid-rentals-prediction | job_type=baseline
+2026-03-26 12:19:10 | INFO | __main__ | Stating pipeline
+2026-03-26 12:19:10 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 12:19:10 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 12:19:10 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 12:19:10 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 12:19:10 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 12:19:10 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 12:19:10 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 12:19:10 | INFO | __main__ | 3) SAVE processed data
+2026-03-26 12:19:10 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 12:19:10 | INFO | __main__ | 4) VALIDATE training data
+2026-03-26 12:19:10 | INFO | src.validate | Validating dataframe
+2026-03-26 12:19:10 | INFO | __main__ | 5) SPLIT train/val/test
+2026-03-26 12:19:10 | INFO | __main__ | Split sizes | train=(1659, 15) | test=(415, 15)
+2026-03-26 12:19:10 | INFO | __main__ | Running fail-fast feature configuration checks
+2026-03-26 12:19:10 | INFO | __main__ | 6) BUILD feature recipe
+2026-03-26 12:19:10 | INFO | src.features | Building ColumnTransfomer
+2026-03-26 12:19:10 | INFO | __main__ | 7) TRAIN base model pipeline
+2026-03-26 12:19:10 | INFO | src.train | Training model pipeline for regression
+2026-03-26 12:19:10 | INFO | src.train | Model training completed
+2026-03-26 12:19:10 | INFO | __main__ | 8) EVALUATE on validation split
+2026-03-26 12:19:10 | INFO | src.evaluate | Starting evaluation
+2026-03-26 12:19:10 | INFO | src.evaluate | Metrics={'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 12:19:10 | INFO | __main__ | Held-out RMSE: {'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 12:19:10 | ERROR | __main__ | Pipeline failed
+Traceback (most recent call last):
+  File "C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\src\main.py", line 450, in main
+    wandb.log(
+    ~~~~~~~~~^
+        {"tables/metrics_comparison_val": wandb.Table(dataframe=comparison_df)})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 399, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 457, in wrapper_fn
+    return func(self, *args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 444, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 2038, in log
+    self._log(data=data, step=step, commit=commit)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 1749, in _log
+    self._partial_history_callback(data, step, commit)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 399, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 1580, in _partial_history_callback
+    self._backend.interface.publish_partial_history(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        publish_step=not_using_tensorboard,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\interface\interface.py", line 690, in publish_partial_history
+    data = history_dict_to_json(run, data, step=user_step, ignore_copy_err=True)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\data_types\utils.py", line 57, in history_dict_to_json
+    payload[key] = val_to_json(
+                   ~~~~~~~~~~~^
+        run, key, val, namespace=step, ignore_copy_err=ignore_copy_err
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\data_types\utils.py", line 154, in val_to_json
+    _log_table_artifact(val, key, run)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\data_types\utils.py", line 204, in _log_table_artifact
+    art.add(val, entry_name)
+    ~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\artifacts\_validators.py", line 272, in wrapper
+    return method(self, *args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\artifacts\artifact.py", line 1733, in add
+    json.dump(val, f, sort_keys=True)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\json\__init__.py", line 181, in dump
+    for chunk in iterable:
+                 ^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\json\encoder.py", line 444, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\json\encoder.py", line 413, in _iterencode_dict
+    yield from chunks
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\json\encoder.py", line 413, in _iterencode_dict
+    yield from chunks
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\json\encoder.py", line 413, in _iterencode_dict
+    yield from chunks
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\json\encoder.py", line 358, in _iterencode_dict
+    items = sorted(dct.items())
+TypeError: '<' not supported between instances of 'int' and 'str'
+when serializing dict item 'type_map'
+when serializing dict item 'params'
+when serializing dict item 'column_types'
