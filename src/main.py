@@ -78,7 +78,6 @@ def main():
     future schedulers (Airflow, Prefect, etc.).
     """
     logger.info("Stating pipeline")
-    print("1") # TODO: replace with logging later
 
     # --------------------------------------------------------
     # Step 0: Ensure output directories exist (manual materialization only)
@@ -249,7 +248,7 @@ def main():
     if problem_type == "regression":
         logger.info(f"Held-out RMSE: {metric_value}")
     else:
-        logger.info(f"[main.main] Held-out weighted F1: {metric_value}")
+        logger.info(f" Held-out weighted F1: {metric_value}")
 
     # --------------------------------------------------------
     # Step 9 Save model (artifact requirement)
@@ -288,7 +287,7 @@ def main():
     logger.info("Wrote processed data: %s", processed_path)
     logger.info("Wrote model artifact: %s", model_path)
     logger.info("Wrote predictions: %s", preds_path)
-    print("2")
+
 
 if __name__ == "__main__":
     main()

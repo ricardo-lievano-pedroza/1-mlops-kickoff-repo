@@ -1,10 +1,51 @@
 # MLOps Project Configuration
 # This file will eventually control paths, hyperparameters, and toggles.
 
-data:
-  raw: "data/raw/dataset.csv"
-  processed: "data/processed/clean.csv"
+paths:
+  raw_data: "data/raw/Houses_for_rent.csv"
+  processed_data: "data/processed/clean.csv"
+  model_artifact: "models/model.joblib"
+  inference_data: "data/inference/Houses_for_rent_inference.csv"
+  predictions_artifact: "reports/predictions.csv"
+  log_file: "logs/pipeline.log"
+
+logging:
+  level: INFO
+
+problem:
+  target_column: "rent"
+  problem_type: "regression"
+
+split:
+  test_size: 0.2
+  random_seed: 42
 
 train:
   test_size: 0.2
-  seed: 42
+  random_state: 42
+
+features:
+  quantile_bin": []
+  categorical_onehot": 
+    -"district",
+  numeric_passthrough": 
+    -"sq.mt"
+    - "floor"
+    - "bedrooms"
+    - "outer"
+    - "duplex"
+    - "cottage"
+    - "elevator"
+    - "penthouse"
+    - "semidetached"
+  n_bins: 3
+
+  numeric_non_negative_cols: 
+    -"sq.mt"
+    - "bedrooms"
+    - "outer"
+    - "duplex"
+    - "cottage"
+    - "elevator"
+    - "penthouse"
+    - "semidetached"
