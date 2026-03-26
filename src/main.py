@@ -138,11 +138,11 @@ def main():
     # --------------------------------------------------------
     logger.info("4) VALIDATE training data")
 
-    validate_dataframe (
+    validate_dataframe(
         df=df_clean,
         required_columns=required_columns,
-        target_column =SETTINGS['target_column'],
-        numeric_non_negative_cols = SETTINGS['features']['numeric_passthrough']
+        target_column=SETTINGS['target_column'],
+        numeric_non_negative_cols=SETTINGS['features']['numeric_passthrough']
         )
 
     # --------------------------------------------------------
@@ -266,8 +266,8 @@ def main():
 
     validate_dataframe(df=df_infer_clean,
                        required_columns=required_columns,
-                       target_column =SETTINGS['target_column']
-                       numeric_non_negative_cols = SETTINGS['features']['numeric_passthrough']
+                       target_column=SETTINGS['target_column'],
+                       numeric_non_negative_cols=SETTINGS['features']['numeric_passthrough']
                        )
 
     X_infer = df_infer_clean[required_columns]
