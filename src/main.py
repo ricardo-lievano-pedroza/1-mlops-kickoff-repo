@@ -6,6 +6,7 @@ import logging
 
 import pandas as pd
 import yaml
+from dotenv import load_dotenv
 from sklearn.model_selection import train_test_split
 
 import wandb

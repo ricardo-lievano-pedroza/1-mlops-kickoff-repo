@@ -50,7 +50,7 @@ def train_model(
     if problem_type.lower() == "regression":
         estimator = LinearRegression()
     else:
-        raise ValueError(f"Training failed: problem_type: {problem_type} not supported")
+        raise ValueError(f"Training failed: problem_type not supported: got '{problem_type}'")
 
     model = Pipeline(
         steps=[

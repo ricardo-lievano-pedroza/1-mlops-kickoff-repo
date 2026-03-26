@@ -3,14 +3,12 @@ from pathlib import Path
 import pandas as pd
 import pytest
 from sklearn.linear_model import Ridge
-
 from src.utils import load_csv, load_model, save_csv, save_model
-
 
 def test_save_and_load_csv_roundtrip(tmp_path: Path):
     df_in = pd.DataFrame({"a": [1, 2], "b": ["x", "y"]})
     csv_path = tmp_path / "nested" / "data.csv"
-
+    
     save_csv(df_in, csv_path)
     df_out = load_csv(csv_path)
 
@@ -24,7 +22,6 @@ def test_save_csv_creates_parent_directories(tmp_path: Path):
     assert not csv_path.parent.exists()
 
     save_csv(df_in, csv_path)
-
     assert csv_path.parent.exists()
     assert csv_path.exists()
 
@@ -51,7 +48,7 @@ def test_save_model_creates_parent_directories(tmp_path: Path):
     model_in = Ridge()
     model_path = tmp_path / "x" / "y" / "model.joblib"
     assert not model_path.parent.exists()
-
+    
     save_model(model_in, model_path)
 
     assert model_path.parent.exists()

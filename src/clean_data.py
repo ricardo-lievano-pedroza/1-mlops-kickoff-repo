@@ -58,39 +58,35 @@ def clean_dataframe(
     # Standarization of the column headers
     df_clean.columns = (
         df_clean.columns
-        # .astype(str)
         .str.strip()
         .str.lower()
         .str.replace(" ", "_")
     )
+
+    categorical_columns = df_clean.select_dtypes(include=["object", "category"]).columns.tolist()
+    for c in categorical_columns:
+        df_clean[c] = df_clean[c].str.strip().str.lower().str.replace(" ", "_")
 
     df_clean.drop_duplicates(inplace=True)
 
     df_clean.columns = [c.lower() for c in df_raw.columns]
 
     if target_column is not None:
-
-        # Standarization of the target column
-        target_column_standarized = (
-            target_column
-            .strip()
-            .lower()
-            .replace(" ", "_")
-        )
-        # Fail fast if the target variable is empty after standarization
-        if not target_column_standarized:
-            raise ValueError("target_column empty after standarization")
-
-        # Fail fast if the target variable standardized is not in the columns
-        # of the data frame
-        if target_column_standarized not in df_clean.columns:
+        if target_column not in df_clean.columns:
             raise ValueError(
-                f"FATAL: target_Column {target_column} missing after cleaning."
-                "Check SETTINGS[target_column] in and CSV headers"
-            )
+                f"FATAL: target_column '{target_column}' missing after cleaning. "
+                "Check SETTINGS[target_column] and CSV headers."
+                )
+
+        try:
+            df_clean[target_column] = df_clean[target_column].astype(float)  # actually assign it back
+        except (ValueError, TypeError) as e:
+            raise TypeError(
+                f"Target variable is not numeric, got type={df_clean[target_column].dtype}"
+            ) from e
 
         # Drop records where there are missing values in the target column.
-        df_clean.dropna(subset=[target_column_standarized])
+        df_clean.dropna(subset=[target_column], inplace= True)
 
     df_clean.reset_index(drop=True, inplace=True)
 

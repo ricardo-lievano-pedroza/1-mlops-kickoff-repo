@@ -16,7 +16,7 @@ def test_validate_dataframe_returns_true_on_valid_data():
 
 def test_validate_dataframe_raises_on_empty_df():
     df_empty = pd.DataFrame()
-    with pytest.raises(ValueError, match="DataFrame is empty"):
+    with pytest.raises(ValueError, match="Validation failed: DataFrame is empty. Check your data loading and src/clean_data.py module."):
         validate_dataframe(df_empty, required_columns=["rent"])
 
 

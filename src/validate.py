@@ -28,7 +28,7 @@ def validate_dataframe(
 
     if df is None or len(df) == 0:
         raise ValueError(
-            "Validation failed: df is empty. Check your data loading and src/clean_data.py module."
+            "Validation failed: DataFrame is empty. Check your data loading and src/clean_data.py module."
         )
 
     if not isinstance(df, pd.DataFrame):

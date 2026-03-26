@@ -32,12 +32,11 @@ def get_feature_preprocessor(
     logger.info("Building ColumnTransfomer")
 
     if n_bins < 2 and bin_cols is not None:
-        raise ValueError("FATAL: n_bins must be >= 2 for quantile binning")
+        raise ValueError("Fatal: n_bins must be >= 2 for quantile binning")
 
     if not (bin_cols or categorical_cols or numeric_cols):
-        raise ValueError(
-            "Fatal: No feature columns configured for the preprocessor"
-            )
+        logger.warning("No feature columns configured — returning passthrough transformer")
+        return ColumnTransformer(transformers=[], remainder="passthrough")
 
     bin_cols = bin_cols or []
     categorical_cols = categorical_cols or []

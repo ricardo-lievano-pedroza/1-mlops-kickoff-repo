@@ -21,6 +21,12 @@ def load_csv(filepath: Path) -> pd.DataFrame:
         raise TypeError(
             f"filepath must be a pathlib.Path, got type={type(filepath)}")
 
+        # Add this block ↓
+    if not filepath.exists():
+        raise FileNotFoundError(
+            f"CSV file not found at {filepath}."
+        )
+
     if filepath.exists() and not filepath.is_file():
         raise ValueError(
             f"CSV Parsing Error: {filepath} exists but is not a file")

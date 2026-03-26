@@ -51,8 +51,7 @@ def test_end_to_end_pipeline_integration(tmp_path: Path):
     ]
 
     # 4) Clean
-    df_clean = clean_dataframe(df_raw, target_column=target_column,
-                               required_columns=required_columns)
+    df_clean = clean_dataframe(df_raw, target_column=target_column)
     save_csv(df_clean, clean_path)
 
     assert validate_dataframe(
@@ -70,7 +69,6 @@ def test_end_to_end_pipeline_integration(tmp_path: Path):
     preprocessor = get_feature_preprocessor(
         bin_cols=[],
         categorical_cols=[],
-        # TODO_STUDENT: add categorical cols if you have them as strings
         numeric_cols=list(X.columns),
         n_bins=3,
     )

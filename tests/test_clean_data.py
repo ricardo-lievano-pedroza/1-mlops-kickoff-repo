@@ -13,10 +13,7 @@ def test_drops_missing_target():
     df_clean = clean_dataframe(
         df_raw=df,
         target_column="target",
-        required_columns=[
-            "feature",
-            "target"]
-        )
+    )
 
     # One row should be dropped
     assert len(df_clean) == 2
@@ -32,7 +29,6 @@ def test_target_is_numeric():
     df_clean = clean_dataframe(
         df_raw=df,
         target_column="target",
-        required_columns=["feature", "target"]
     )
 
     assert pd.api.types.is_numeric_dtype(df_clean["target"])
@@ -47,10 +43,9 @@ def test_categorical_normalization():
     df_clean = clean_dataframe(
         df_raw=df,
         target_column="target",
-        required_columns=["city", "target"]
     )
 
-    assert df_clean["city"].iloc[0] == "new york"
+    assert df_clean["city"].iloc[0] == "new_york"
     assert df_clean["city"].iloc[1] == "london"
     assert df_clean["city"].iloc[2] == "paris"
 
@@ -64,7 +59,6 @@ def test_raises_if_target_missing():
         clean_dataframe(
             df_raw=df,
             target_column="target",
-            required_columns=["feature"]
         )
 
 
@@ -73,6 +67,5 @@ def test_drops_duplicates():
     df_clean = clean_dataframe(
         df_raw=df,
         target_column="target",
-        required_columns=["city", "target"]
     )
     assert len(df_clean) == 1
