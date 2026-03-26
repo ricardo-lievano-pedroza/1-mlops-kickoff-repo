@@ -1,0 +1,67 @@
+# .dockerignore
+# =========================================================
+# Lean serving image (allowlist strategy)
+# =========================================================
+
+# Ignore everything by default
+**
+
+# -------------------------
+# Allow only runtime needs
+# -------------------------
+
+!Dockerfile
+!.dockerignore
+
+# Environment lock
+!conda-lock.yml
+
+# Runtime config
+!config.yaml
+
+# Full application package (safe choice)
+!src/
+!src/**
+
+# Local model fallback (used if MODEL_SOURCE=local)
+!models/
+!models/**
+
+# -------------------------
+# Explicit exclusions (safety)
+# -------------------------
+
+# Dev and teaching
+tests/
+notebooks/
+.ipynb_checkpoints/
+
+# Data and artifacts
+data/
+reports/
+wandb/
+logs/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Tooling cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+coverage/
+.coverage
+htmlcov/
+
+# Secrets
+.env
+.env.*
+
+# Git and IDE
+.git/
+.github/
+.vscode/
+.idea/
