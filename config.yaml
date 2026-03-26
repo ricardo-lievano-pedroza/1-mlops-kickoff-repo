@@ -20,16 +20,12 @@ split:
   test_size: 0.2
   random_seed: 42
 
-train:
-  test_size: 0.2
-  random_state: 42
-
 features:
-  quantile_bin": []
-  categorical_onehot": 
-    -"district",
-  numeric_passthrough": 
-    -"sq.mt"
+  quantile_bin: []
+  categorical_onehot:
+    - "district"
+  numeric_passthrough:
+    - "sq.mt"
     - "floor"
     - "bedrooms"
     - "outer"
@@ -39,9 +35,8 @@ features:
     - "penthouse"
     - "semidetached"
   n_bins: 3
-
-  numeric_non_negative_cols: 
-    -"sq.mt"
+  non_negative: 
+    - "sq.mt"
     - "bedrooms"
     - "outer"
     - "duplex"
