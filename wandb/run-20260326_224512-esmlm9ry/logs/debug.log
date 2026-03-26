@@ -1,0 +1,24 @@
+2026-03-26 22:45:12,046 INFO    MainThread:27772 [wandb_setup.py:_flush():81] Current SDK version is 0.25.1
+2026-03-26 22:45:12,047 INFO    MainThread:27772 [wandb_setup.py:_flush():81] Configure stats pid to 27772
+2026-03-26 22:45:12,047 INFO    MainThread:27772 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-03-26 22:45:12,047 INFO    MainThread:27772 [wandb_init.py:setup_run_log_directory():717] Logging user logs to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\wandb\run-20260326_224512-esmlm9ry\logs\debug.log
+2026-03-26 22:45:12,048 INFO    MainThread:27772 [wandb_init.py:setup_run_log_directory():718] Logging internal logs to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\wandb\run-20260326_224512-esmlm9ry\logs\debug-internal.log
+2026-03-26 22:45:12,086 INFO    MainThread:27772 [wandb_init.py:init():844] calling init triggers
+2026-03-26 22:45:12,086 INFO    MainThread:27772 [wandb_init.py:init():849] wandb.init called with sweep_config: {}
+config: {'paths': {'raw_data': 'data/raw/Houses_for_rent.csv', 'processed_data': 'data/processed/clean.csv', 'model_artifact': 'models/model.joblib', 'inference_data': 'data/inference/Houses_for_rent_inference.csv', 'predictions_artifact': 'reports/predictions.csv', 'log_file': 'logs/pipeline.log'}, 'logging': {'level': 'INFO'}, 'problem': {'target_column': 'rent', 'problem_type': 'regression'}, 'split': {'test_size': 0.2, 'random_seed': 42}, 'features': {'quantile_cols': [], 'categorical_onehot': ['district'], 'numeric_passthrough': ['sq_mt', 'floor', 'bedrooms', 'outer', 'duplex', 'cottage', 'elevator', 'penthouse', 'semidetached'], 'n_bins': 3, 'non_negative': ['sq_mt', 'bedrooms', 'outer', 'duplex', 'cottage', 'elevator', 'penthouse', 'semidetached']}, 'wandb': {'enabled': True, 'project': 'madrid-rentals-prediction', 'name': '00.linear_regression', 'job_type': 'baseline', 'group': 'baselines', 'tags': ['baseline'], 'notes': 'Baseline linear regression', 'model_artifact_name': 'rent_prediction_model', 'log_processed_data': True, 'log_predictions': True, 'log_predictions_table': True, 'predictions_table_rows': 200}, '_wandb': {}}
+2026-03-26 22:45:12,086 INFO    MainThread:27772 [wandb_init.py:init():892] starting backend
+2026-03-26 22:45:15,020 INFO    MainThread:27772 [wandb_init.py:init():895] sending inform_init request
+2026-03-26 22:45:15,144 INFO    MainThread:27772 [wandb_init.py:init():903] backend started and connected
+2026-03-26 22:45:15,147 INFO    MainThread:27772 [wandb_init.py:init():973] updated telemetry
+2026-03-26 22:45:15,252 INFO    MainThread:27772 [wandb_init.py:init():997] communicating run to backend with 90.0 second timeout
+2026-03-26 22:45:16,681 INFO    MainThread:27772 [wandb_init.py:init():1042] starting run threads in backend
+2026-03-26 22:45:17,293 INFO    MainThread:27772 [wandb_run.py:_console_start():2524] atexit reg
+2026-03-26 22:45:17,294 INFO    MainThread:27772 [wandb_run.py:_redirect():2373] redirect: wrap_raw
+2026-03-26 22:45:17,294 INFO    MainThread:27772 [wandb_run.py:_redirect():2442] Wrapping output streams.
+2026-03-26 22:45:17,294 INFO    MainThread:27772 [wandb_run.py:_redirect():2465] Redirects installed.
+2026-03-26 22:45:17,304 INFO    MainThread:27772 [wandb_init.py:init():1082] run started, returning control to user process
+2026-03-26 22:45:20,598 INFO    MainThread:27772 [wandb_run.py:_finish():2291] finishing run ricardolievano-ie-university/madrid-rentals-prediction/esmlm9ry
+2026-03-26 22:45:20,599 INFO    MainThread:27772 [wandb_run.py:_atexit_cleanup():2490] got exitcode: 0
+2026-03-26 22:45:20,601 INFO    MainThread:27772 [wandb_run.py:_restore():2472] restore
+2026-03-26 22:45:20,602 INFO    MainThread:27772 [wandb_run.py:_restore():2478] restore done
+2026-03-26 22:45:23,585 INFO    MainThread:27772 [wandb_run.py:_footer_sync_info():3868] logging synced files

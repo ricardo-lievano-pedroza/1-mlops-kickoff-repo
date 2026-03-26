@@ -61,15 +61,16 @@ def clean_dataframe(
         .str.strip()
         .str.lower()
         .str.replace(" ", "_")
+        .str.replace(".", "_")
     )
 
     categorical_columns = df_clean.select_dtypes(include=["object", "category"]).columns.tolist()
     for c in categorical_columns:
         df_clean[c] = df_clean[c].str.strip().str.lower().str.replace(" ", "_")
 
-    df_clean.drop_duplicates(inplace=True)
+    df_clean.drop_duplicates(inplace=True, keep="first")
 
-    df_clean.columns = [c.lower() for c in df_raw.columns]
+    df_clean.columns = [c.lower() for c in df_clean.columns]
 
     if target_column is not None:
         if target_column not in df_clean.columns:
@@ -95,7 +96,7 @@ def clean_dataframe(
     if dropped_rows > 0:
         logger.info(f'Dropped {dropped_rows} rows')
 
-    logger.info(f"Rows after cleaning {dropped_rows} rows")
+    logger.info(f"Rows after cleaning: {len(df_clean)} rows remaining, {dropped_rows} dropped")
 
     return df_clean
 

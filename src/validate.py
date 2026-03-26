@@ -45,6 +45,7 @@ def validate_dataframe(
         .lower()
         .strip()
         .replace(" ", "_")
+        .replace(".", "_")
         for col in required_columns
     ]
 
