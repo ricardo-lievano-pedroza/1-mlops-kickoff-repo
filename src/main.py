@@ -1,21 +1,11 @@
-"""
-Educational Goal:
-- Why this module exists in an MLOps system: Provide a single, readable
-“pipeline story” that runs end-to-end from raw data to saved artifacts.
-- Responsibility (separation of concerns): Orchestrate steps and materialize
-artifacts (processed data, trained model, predictions).
-- Pipeline contract (inputs and outputs): Input is repository paths + SETTINGS;
- outputs are saved artifacts and printed metrics.
-
-TODO: Replace print statements with standard library logging in a later session
-TODO: Any temporary or hardcoded variable or parameter will be imported from
-config.yml in a later session
-"""
-
 # 1) Imports
 from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+
+import logging
 
 import pandas as pd
+
 from sklearn.model_selection import train_test_split
 
 from src.validate import validate_dataframe
@@ -26,6 +16,9 @@ from src.infer import run_inference
 from src.load_data import load_raw_data
 from src.train import train_model
 from src.utils import load_csv, save_csv, save_model
+
+
+logger = logging.getLogger(__name__)
 
 # 2) CONFIGURATION (SETTINGS dictionary bridge)
 # LOUD REMINDER:
@@ -67,6 +60,7 @@ SETTINGS = {
 
 
 def main():
+
     """
     Inputs:
     - None (reads SETTINGS and files from repo-relative paths)
@@ -77,14 +71,12 @@ def main():
     - A single entrypoint makes execution consistent across laptops, CI, and
     future schedulers (Airflow, Prefect, etc.).
     """
-    print("[main.main] Starting end-to-end pipeline")
+    logger.info("Stating pipeline")
     # TODO: replace with logging later
 
     # --------------------------------------------------------
     # Step 0: Ensure output directories exist (manual materialization only)
     # --------------------------------------------------------
-    print("[main.main] Ensuring required directories exist")
-    # TODO: replace with logging later
     Path("data/raw").mkdir(parents=True, exist_ok=True)
     Path("data/processed").mkdir(parents=True, exist_ok=True)
     Path("models").mkdir(parents=True, exist_ok=True)
@@ -92,7 +84,7 @@ def main():
     Path("data/inference").mkdir(parents=True, exist_ok=True)
 
     # --------------------------------------------------------
-    # Step 1: Example-config check
+    # Step 0: Example-config check
     # --------------------------------------------------------
     if SETTINGS.get("is_example_config", False):
         print("LOUD NOTE: SETTINGS is using the example dummy configuration.")
@@ -113,15 +105,15 @@ def main():
     problem_type = SETTINGS["problem_type"]
 
     # --------------------------------------------------------
-    # Step 2: Load
+    # Step 1: Load
     # --------------------------------------------------------
-    print("[main.main] Loading raw data")  # TODO: replace with logging later
+    logger.info("1) LOAD raw data")
     df_raw = load_raw_data(raw_path)
 
     # --------------------------------------------------------
-    # Step 3: Clean
+    # Step 2: Clean
     # --------------------------------------------------------
-    print("[main.main] Cleaning data")  # TODO: replace with logging later
+    logger.info("2) CLEAN training data")
 
     feature_cfg = SETTINGS["features"]
     configured_feature_cols = (
@@ -132,32 +124,32 @@ def main():
     required_columns = list(
         dict.fromkeys(configured_feature_cols + [target_column])
     )
-    df_clean = clean_dataframe(
-        df_raw,
-        target_column=target_column,
-        required_columns=required_columns
-    )
+    df_clean = clean_dataframe(df_raw, target_column=target_column)
 
     # --------------------------------------------------------
-    # Step 4: Save processed CSV (artifact requirement)
+    # Step 3: Save processed CSV (artifact requirement)
     # --------------------------------------------------------
-    print(f"[main.main] Saving processed data to {processed_path}")
-    # TODO: replace with logging later
+    logger.info("3) SAVE processed data")
+
     save_csv(df_clean, processed_path)
 
     # --------------------------------------------------------
-    # Step 5: Validate
+    # Step 4: Validate
     # --------------------------------------------------------
-    print("[main.main] Validating cleaned data")
-    # TODO: replace with logging later
+    logger.info("4) VALIDATE training data")
 
-    validate_dataframe(df_clean, required_columns=required_columns)
+    validate_dataframe(
+        df=df_clean,
+        required_columns=required_columns,
+        target_column=SETTINGS['target_column'],
+        numeric_non_negative_cols=SETTINGS['features']['numeric_passthrough']
+        )
 
     # --------------------------------------------------------
-    # Step 6: Train/test split (BEFORE any feature fitting to prevent leakage)
+    # Step 5: Train/test split (BEFORE any feature fitting to prevent leakage)
     # --------------------------------------------------------
-    print("[main.main] Splitting train/test")
-    # TODO: replace with logging later
+    logger.info("5) SPLIT train/val/test")
+
     X = df_clean.drop(columns=[target_column])
     y = df_clean[target_column]
 
@@ -172,25 +164,25 @@ def main():
             stratify=stratify,
         )
     except ValueError as e:
-        print(
-            f"[main.main] Stratified split failed ({e});"
+        logger.info(
+            f"Stratified split failed ({e});"
             "falling back to non-stratified split."
             )
-        # TODO: replace with logging later
-        X_train, X_test, y_train, y_test = train_test_split(
+
+        X_train, X_val, X_test, y_train, y_val, y_test = train_test_split(
             X,
             y,
-            test_size=SETTINGS["test_size"],
-            random_state=SETTINGS["random_state"],
-            stratify=None,
+            test_size=SETTINGS['test_size'],
+            random_state=SETTINGS['random_state'],
+            stratify=(problem_type == "classification"),
         )
+    logger.info("Split sizes | train=%s | test=%s", X_train.shape, X_test.shape)
 
     # --------------------------------------------------------
-    # Step 7: Fail-fast feature checks (columns exist + quantile_bin cols are
+    # Step 5.1: Fail-fast feature checks (columns exist + quantile_bin cols are
     # numeric)
     # --------------------------------------------------------
-    print("[main.main] Running fail-fast feature configuration checks")
-    # TODO: replace with logging later
+    logger.info("Running fail-fast feature configuration checks")
 
     missing_cols = [
         c for c in configured_feature_cols if c not in X_train.columns
@@ -213,10 +205,10 @@ def main():
             )
 
     # --------------------------------------------------------
-    # Step 8: Build feature recipe (unfitted ColumnTransformer)
+    # Step 6: Build feature recipe (unfitted ColumnTransformer)
     # --------------------------------------------------------
-    print("[main.main] Building feature preprocessor recipe")
-    # TODO: replace with logging later
+    logger.info("6) BUILD feature recipe")
+
     preprocessor = get_feature_preprocessor(
         bin_cols=feature_cfg.get("quantile_bin", []),
         categorical_cols=feature_cfg.get("categorical_onehot", []),
@@ -225,9 +217,10 @@ def main():
     )
 
     # --------------------------------------------------------
-    # Step 9: Train model (Pipeline fits preprocess+model on TRAIN only)
+    # Step 7: Train model (Pipeline fits preprocess+model on TRAIN only)
     # --------------------------------------------------------
-    print("[main.main] Training model")  # TODO: replace with logging later
+    logger.info("7) TRAIN base model pipeline")
+
     model = train_model(
         X_train=X_train,
         y_train=y_train,
@@ -236,16 +229,10 @@ def main():
     )
 
     # --------------------------------------------------------
-    # Step 10: Save model (artifact requirement)
+    # Step 8: Evaluate
     # --------------------------------------------------------
-    print(f"[main.main] Saving model to {model_path}")
-    # TODO: replace with logging later
-    save_model(model, model_path)
+    logger.info("8) EVALUATE on validation split")
 
-    # --------------------------------------------------------
-    # Step 11: Evaluate
-    # --------------------------------------------------------
-    print("[main.main] Evaluating model")  # TODO: replace with logging later
     metric_value = evaluate_model(
         model=model,
         X_test=X_test,
@@ -254,35 +241,47 @@ def main():
     )
 
     if problem_type == "regression":
-        print(f"[main.main] Held-out RMSE: {metric_value}")
-        # TODO: replace with logging later
+        logger.info(f"Held-out RMSE: {metric_value}")
     else:
-        print(f"[main.main] Held-out weighted F1: {metric_value}")
-        # TODO: replace with logging later
+        logger.info(f"[main.main] Held-out weighted F1: {metric_value}")
 
     # --------------------------------------------------------
-    # Step 12: Inference on example data + save predictions
+    # Step 9 Save model (artifact requirement)
+    # --------------------------------------------------------
+    logger.info("9) SAVE model artifact")
+
+    save_model(model, model_path)
+
+    # --------------------------------------------------------
+    # Step 10: Inference on example data + save predictions
     # (artifact requirement)
     # --------------------------------------------------------
-    print(
-        "[main.main] Running inference on held-out test features and saving"
-        "predictions"
-        )  # TODO: replace with logging later
+    logger.info("10) INFER on new data file")
+
     df_infer = load_csv(inference_path)
     df_infer_clean = clean_dataframe(
         df_raw=df_infer,
-        target_column=SETTINGS['target_column'],
-        required_columns=required_columns
-    )
+        target_column=SETTINGS['target_column']
+        )
+
+    validate_dataframe(df=df_infer_clean,
+                       required_columns=required_columns,
+                       target_column=SETTINGS['target_column'],
+                       numeric_non_negative_cols=SETTINGS['features']['numeric_passthrough']
+                       )
+
     X_infer = df_infer_clean[required_columns]
+
     df_pred = run_inference(model=model, X_infer=X_infer)
+
+    logger.debug("Inference preview\n%s", df_pred.head(10).to_string(index=False))
+
     save_csv(df_pred, preds_path)
 
-    print("[main.main] Pipeline complete. Artifacts created:")
-    # TODO: replace with logging later
-    print(f" - {processed_path}")  # TODO: replace with logging later
-    print(f" - {model_path}")  # TODO: replace with logging later
-    print(f" - {preds_path}")  # TODO: replace with logging later
+    logger.info("Done")
+    logger.info("Wrote processed data: %s", processed_path)
+    logger.info("Wrote model artifact: %s", model_path)
+    logger.info("Wrote predictions: %s", preds_path)
 
 
 if __name__ == "__main__":
