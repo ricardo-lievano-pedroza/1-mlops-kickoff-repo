@@ -17,8 +17,14 @@ from src.load_data import load_raw_data
 from src.train import train_model
 from src.utils import load_csv, save_csv, save_model
 
+from src.logger import configure_logging
 
 logger = logging.getLogger(__name__)
+
+configure_logging(
+        log_level="INFO",
+        log_file="logs/pipeline.log"
+    )
 
 # 2) CONFIGURATION (SETTINGS dictionary bridge)
 # LOUD REMINDER:
@@ -72,7 +78,7 @@ def main():
     future schedulers (Airflow, Prefect, etc.).
     """
     logger.info("Stating pipeline")
-    # TODO: replace with logging later
+    print("1") # TODO: replace with logging later
 
     # --------------------------------------------------------
     # Step 0: Ensure output directories exist (manual materialization only)
@@ -142,7 +148,7 @@ def main():
         df=df_clean,
         required_columns=required_columns,
         target_column=SETTINGS['target_column'],
-        numeric_non_negative_cols=SETTINGS['features']['numeric_passthrough']
+        numeric_non_negative_cols=[c for c in SETTINGS['features']['numeric_passthrough'] if c != 'floor']
         )
 
     # --------------------------------------------------------
@@ -282,7 +288,7 @@ def main():
     logger.info("Wrote processed data: %s", processed_path)
     logger.info("Wrote model artifact: %s", model_path)
     logger.info("Wrote predictions: %s", preds_path)
-
+    print("2")
 
 if __name__ == "__main__":
     main()

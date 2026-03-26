@@ -58,10 +58,10 @@ def clean_dataframe(
     # Standarization of the column headers
     df_clean.columns = (
         df_clean.columns
-        .astype(str)
+        # .astype(str)
         .str.strip()
-        .str.lower
-        .str.raplace(" ", "_", regex=False)
+        .str.lower()
+        .str.replace(" ", "_")
     )
 
     df_clean.drop_duplicates(inplace=True)
@@ -73,10 +73,9 @@ def clean_dataframe(
         # Standarization of the target column
         target_column_standarized = (
             target_column
-            .astype(str)
-            .str.strip()
-            .str.lower
-            .str.raplace(" ", "_", regex=False)
+            .strip()
+            .lower()
+            .replace(" ", "_")
         )
         # Fail fast if the target variable is empty after standarization
         if not target_column_standarized:

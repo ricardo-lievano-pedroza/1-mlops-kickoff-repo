@@ -1,0 +1,37 @@
+2026-03-26 08:36:15 | INFO | __main__ | Stating pipeline
+2026-03-26 08:36:15 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 08:36:15 | INFO | src.load_data | Loading raw data from data\raw\Houses_for_rent.csv
+2026-03-26 08:36:15 | INFO | src.utils | Loading CSV from data\raw\Houses_for_rent.csv
+2026-03-26 08:36:15 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 08:36:15 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 08:36:15 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 08:36:15 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 08:36:15 | INFO | __main__ | 3) SAVE processed data
+2026-03-26 08:36:15 | INFO | src.utils | Saving CSV to data\processed\clean.csv
+2026-03-26 08:36:15 | INFO | __main__ | 4) VALIDATE training data
+2026-03-26 08:36:15 | INFO | src.validate | Validating dataframe
+2026-03-26 08:36:15 | INFO | __main__ | 5) SPLIT train/val/test
+2026-03-26 08:36:15 | INFO | __main__ | Split sizes | train=(1555, 15) | test=(519, 15)
+2026-03-26 08:36:15 | INFO | __main__ | Running fail-fast feature configuration checks
+2026-03-26 08:36:15 | INFO | __main__ | 6) BUILD feature recipe
+2026-03-26 08:36:15 | INFO | src.features | Building ColumnTransfomer
+2026-03-26 08:36:15 | INFO | __main__ | 7) TRAIN base model pipeline
+2026-03-26 08:36:15 | INFO | src.train | Training model pipeline for regression
+2026-03-26 08:36:15 | INFO | src.train | Model training completed
+2026-03-26 08:36:15 | INFO | __main__ | 8) EVALUATE on validation split
+2026-03-26 08:36:15 | INFO | src.evaluate | Starting evaluation
+2026-03-26 08:36:15 | INFO | src.evaluate | Metrics={'mae': 429.1715731513108, 'rmse': 845.4059007750092, 'r2': 0.6528447371469486}
+2026-03-26 08:36:15 | INFO | __main__ | Held-out RMSE: {'mae': 429.1715731513108, 'rmse': 845.4059007750092, 'r2': 0.6528447371469486}
+2026-03-26 08:36:15 | INFO | __main__ | 9) SAVE model artifact
+2026-03-26 08:36:15 | INFO | src.utils | Saving model to models\model.joblib
+2026-03-26 08:36:15 | INFO | __main__ | 10) INFER on new data file
+2026-03-26 08:36:15 | INFO | src.utils | Loading CSV from data\inference\Houses_for_rent_inference.csv
+2026-03-26 08:36:15 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 08:36:15 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 08:36:15 | INFO | src.validate | Validating dataframe
+2026-03-26 08:36:15 | INFO | src.infer | Running Inference
+2026-03-26 08:36:15 | INFO | src.utils | Saving CSV to reports\predictions.csv
+2026-03-26 08:36:15 | INFO | __main__ | Done
+2026-03-26 08:36:15 | INFO | __main__ | Wrote processed data: data\processed\clean.csv
+2026-03-26 08:36:15 | INFO | __main__ | Wrote model artifact: models\model.joblib
+2026-03-26 08:36:15 | INFO | __main__ | Wrote predictions: reports\predictions.csv
