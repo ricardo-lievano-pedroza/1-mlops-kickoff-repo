@@ -1,83 +1,75 @@
-"""
-Module: Evaluation
-------------------
-Role: Generate metrics and plots for model performance.
-Input: Trained Model + Test Data.
-Output: Metrics dictionary and plots saved to `reports/`.
-"""
+import logging
 
-"""
-Module: Evaluation
-------------------
-Role: Generate metrics and plots for model performance.
-Input: Trained Model + Test Data.
-Output: Metrics dictionary and plots saved to `reports/`.
-"""
 
-from pathlib import Path
-from typing import Any, Dict, Union
+from typing import Dict
 
 import numpy as np
 import pandas as pd
-#import matplotlib.pyplot as plt
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+"""
+Module: Evaluation
+------------------
+Role: Generate metrics and plots for model performance.
+Input: Trained Model + Test Data.
+Output: Metrics dictionary.
+"""
+logger = logging.getLogger(__name__)
 
 
 def evaluate_model(
-    model: Any,
-    X_test: Union[pd.DataFrame, np.ndarray],
-    y_test: Union[pd.Series, np.ndarray],
+    model,
+    X_test: pd.DataFrame,
+    y_test: pd.Series,
     problem_type: str
 ) -> Dict[str, float]:
     """
     Evaluate a trained regression model on test data.
 
     Input:
-    - Trained model + test data
+    - model: Fitted model with predict() method
+    - X_test: Evaluation feautures
+    - Y_test: Evaluation target
+    - problem_type : "regression" or "classification"
 
     Output:
-    - Metrics dictionary
-    - Plots saved to `reports/`
+    - metrics: Dictionary of metrics as python floats
+
     """
-    reports_dir = Path("reports")
-    reports_dir.mkdir(parents=True, exist_ok=True)
+    logger.info("Starting evaluation")
 
-    y_true = np.asarray(y_test).reshape(-1)
-    y_pred = np.asarray(model.predict(X_test)).reshape(-1)
+    if X_test is None or len(X_test) == 0:
+        raise ValueError(
+            "FATAL: X_test is empty. Cannot evaluate the model"
+        )
 
-    if y_true.shape[0] != y_pred.shape[0]:
-        raise ValueError(f"y_test length {len(y_true)} != y_pred length {len(y_pred)}")
+    if y_test is None or len(y_test) == 0:
+        raise ValueError(
+            "FATAL: y_test is empty. Cannot evaluate the model"
+        )
 
-    # Metrics
-    mae = float(mean_absolute_error(y_true, y_pred))
-    rmse = float(np.sqrt(mean_squared_error(y_true, y_pred)))
-    r2 = float(r2_score(y_true, y_pred))
+    if len(X_test) != len(y_test):
+        raise ValueError(
+            f"FATAL: X_test rows:{len(X_test)}do not match y_test rows: {len(y_test)}"
+        )
 
-    metrics: Dict[str, float] = {"mae": mae, "rmse": rmse, "r2": r2}
+    if not hasattr(model, "predict"):
+        raise TypeError(
+            f"FATAL: model must have the method predict(), got type= {type(model)}"
+        )
 
-    # # Plot 1: Predicted vs Actual
-    # fig, ax = plt.subplots()
-    # ax.scatter(y_true, y_pred, alpha=0.5)
-    # ax.set_xlabel("Actual")
-    # ax.set_ylabel("Predicted")
-    # ax.set_title("Predicted vs Actual")
-    # mn = float(min(np.min(y_true), np.min(y_pred)))
-    # mx = float(max(np.max(y_true), np.max(y_pred)))
-    # ax.plot([mn, mx], [mn, mx])
-    # fig.tight_layout()
-    # fig.savefig(reports_dir / "pred_vs_actual.png", dpi=150)
-    # plt.close(fig)
+    if problem_type.lower() != "regression":
+        raise ValueError(
+            f"FATAL: Unsupported problem_type: {problem_type}: Use 'regression'"
+        )
 
-    # # Plot 2: Residuals vs Predicted
-    # residuals = y_true - y_pred
-    # fig, ax = plt.subplots()
-    # ax.scatter(y_pred, residuals, alpha=0.5)
-    # ax.axhline(0.0)
-    # ax.set_xlabel("Predicted")
-    # ax.set_ylabel("Residual (Actual - Predicted)")
-    # ax.set_title("Residuals vs Predicted")
-    # fig.tight_layout()
-    # fig.savefig(reports_dir / "residuals_vs_pred.png", dpi=150)
-    # plt.close(fig)
+    y_pred = model.predict(X_test)
+
+    mae = float(mean_absolute_error(y_test, y_pred))
+    rmse = float(np.sqrt(mean_squared_error(y_test, y_pred)))
+    r2 = float(r2_score(y_test, y_pred))
+    metrics = {"mae": mae, "rmse": rmse, "r2": r2}
+
+    logger.info("Metrics=%s", metrics)
 
     return metrics

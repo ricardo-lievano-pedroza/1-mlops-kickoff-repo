@@ -1,56 +1,81 @@
-def test_validate():
-    import pandas as pd
-    import pytest
-    from src import validate  # change if your module path differs
+import pandas as pd
+import pytest
 
-    schema = {
-        "age": {"dtype": "integer", "nullable": False, "min": 0, "max": 120},
-        "income": {"dtype": "numeric", "nullable": True, "min": 0},
-        "country": {"dtype": "string", "nullable": False, "allowed_values": ["ES", "FR", "DE"]},
-        "id": {"dtype": "integer", "nullable": False, "unique": True},
-    }
+from src.validate import validate_dataframe
 
-    # --- valid case ---
-    df_ok = pd.DataFrame(
+
+def test_validate_dataframe_returns_true_on_valid_data():
+    df = pd.DataFrame(
         {
-            "age": pd.Series([25, 40, 18], dtype="int64"),
-            "income": pd.Series([1000.0, 2000.0, 0.0], dtype="float64"),
-            "country": pd.Series(["ES", "FR", "DE"], dtype="object"),
-            "id": pd.Series([1, 2, 3], dtype="int64"),
+            "rent": [1000.0, 1500.0, 1200.0],
+            "outer": [0, 1, 0],
         }
     )
-    assert validate(df_ok, schema) is True
+    assert validate_dataframe(df, required_columns=["rent", "outer"]) is True
 
-    # --- invalid: missing column ---
+
+def test_validate_dataframe_raises_on_empty_df():
+    df_empty = pd.DataFrame()
+    with pytest.raises(ValueError, match="Validation failed: DataFrame is empty. Check your data loading and src/clean_data.py module."):
+        validate_dataframe(df_empty, required_columns=["rent"])
+
+
+def test_validate_dataframe_raises_on_missing_required_columns():
+    df = pd.DataFrame({"rent": [1000.0]})
     with pytest.raises(ValueError, match="Missing required columns"):
-        validate(df_ok.drop(columns=["income"]), schema)
+        validate_dataframe(df, required_columns=["rent", "outer"])
 
-    # --- invalid: extra column (when allow_extra_columns=False) ---
-    df_extra = df_ok.copy()
-    df_extra["extra"] = 1
-    with pytest.raises(ValueError, match="Unexpected columns present"):
-        validate(df_extra, schema, allow_extra_columns=False)
 
-    # --- invalid: null in non-nullable ---
-    df_null = df_ok.copy()
-    df_null.loc[0, "age"] = None
-    with pytest.raises(ValueError, match="non-nullable"):
-        validate(df_null, schema)
+def test_validate_dataframe_raises_on_high_null_rate():
+    # 4 rows: 4/4 nulls => 100% null rate > 0.8 threshold
+    df = pd.DataFrame(
+        {
+            "rent": [1000.0, 1200.0, 1100.0, 1300.0],
+            "outer": [None, None, None, None],
+        }
+    )
+    with pytest.raises(ValueError, match="High null rate"):
+        validate_dataframe(df, required_columns=["rent", "outer"])
 
-    # --- invalid: range violation ---
-    df_range = df_ok.copy()
-    df_range.loc[1, "age"] = 200
-    with pytest.raises(ValueError, match=r"values > 120"):
-        validate(df_range, schema)
 
-    # --- invalid: allowed values violation ---
-    df_allowed = df_ok.copy()
-    df_allowed.loc[2, "country"] = "UK"
-    with pytest.raises(ValueError, match=r"invalid values"):
-        validate(df_allowed, schema)
+def test_validate_dataframe_raises_on_rent_out_of_range_low():
+    df = pd.DataFrame(
+        {
+            "rent": [-1.0, 1000.0],
+            "outer": [0, 1],
+        }
+    )
+    with pytest.raises(ValueError, match="values < 0.0"):
+        validate_dataframe(df, required_columns=["rent", "outer"])
 
-    # --- invalid: unique violation ---
-    df_dup = df_ok.copy()
-    df_dup.loc[2, "id"] = 2
-    with pytest.raises(ValueError, match=r"expected unique"):
-        validate(df_dup, schema)
+
+def test_validate_dataframe_raises_on_rent_out_of_range_high():
+    df = pd.DataFrame(
+        {
+            "rent": [25000.0, 1000.0],  # default max is 20000
+            "outer": [0, 1],
+        }
+    )
+    with pytest.raises(ValueError, match="values > 20000.0"):
+        validate_dataframe(df, required_columns=["rent", "outer"])
+
+
+def test_validate_dataframe_raises_on_invalid_binary_values():
+    df = pd.DataFrame(
+        {
+            "rent": [1000.0, 1200.0, 1100.0],
+            "outer": [0, 2, 1],  # 2 is invalid
+        }
+    )
+    with pytest.raises(ValueError, match="Binary-like column"):
+        validate_dataframe(df, required_columns=["rent", "outer"])
+
+
+def test_validate_dataframe_accepts_common_string_binary_values():
+    df = pd.DataFrame(
+        {
+            "rent": [1000.0, 1200.0, 1100.0, 1300.0],
+            "outer": ["Y", "n", "1", "0"],
+        }
+    )
+    assert validate_dataframe(df, required_columns=["rent", "outer"]) is True

@@ -10,7 +10,10 @@ def test_drops_missing_target():
         "target": [10, None, 30]
     })
 
-    df_clean = clean_dataframe(df, target_column="target")
+    df_clean = clean_dataframe(
+        df_raw=df,
+        target_column="target",
+    )
 
     # One row should be dropped
     assert len(df_clean) == 2
@@ -23,7 +26,10 @@ def test_target_is_numeric():
         "target": ["10", "20", "30"]
     })
 
-    df_clean = clean_dataframe(df, target_column="target")
+    df_clean = clean_dataframe(
+        df_raw=df,
+        target_column="target",
+    )
 
     assert pd.api.types.is_numeric_dtype(df_clean["target"])
 
@@ -34,9 +40,12 @@ def test_categorical_normalization():
         "target": [1, 2, 3]
     })
 
-    df_clean = clean_dataframe(df, target_column="target")
+    df_clean = clean_dataframe(
+        df_raw=df,
+        target_column="target",
+    )
 
-    assert df_clean["city"].iloc[0] == "new york"
+    assert df_clean["city"].iloc[0] == "new_york"
     assert df_clean["city"].iloc[1] == "london"
     assert df_clean["city"].iloc[2] == "paris"
 
@@ -47,10 +56,16 @@ def test_raises_if_target_missing():
     })
 
     with pytest.raises(ValueError):
-        clean_dataframe(df, target_column="target")
+        clean_dataframe(
+            df_raw=df,
+            target_column="target",
+        )
 
 
 def test_drops_duplicates():
     df = pd.DataFrame({"city": ["a", "a"], "target": [1, 1]})
-    df_clean = clean_dataframe(df, target_column="target")
+    df_clean = clean_dataframe(
+        df_raw=df,
+        target_column="target",
+    )
     assert len(df_clean) == 1

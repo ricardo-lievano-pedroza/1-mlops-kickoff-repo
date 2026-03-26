@@ -1,0 +1,38 @@
+2026-03-26 12:35:25 | INFO | __main__ | Initialized W&B run | name=00.linear_regression | project=madrid-rentals-prediction | job_type=baseline
+2026-03-26 12:35:25 | INFO | __main__ | Stating pipeline
+2026-03-26 12:35:25 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 12:35:25 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 12:35:25 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 12:35:25 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 12:35:25 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 12:35:25 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 12:35:25 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 12:35:25 | INFO | __main__ | 3) SAVE processed data
+2026-03-26 12:35:25 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 12:35:25 | INFO | __main__ | 4) VALIDATE training data
+2026-03-26 12:35:25 | INFO | src.validate | Validating dataframe
+2026-03-26 12:35:25 | INFO | __main__ | 5) SPLIT train/val/test
+2026-03-26 12:35:25 | INFO | __main__ | Split sizes | train=(1659, 15) | test=(415, 15)
+2026-03-26 12:35:25 | INFO | __main__ | Running fail-fast feature configuration checks
+2026-03-26 12:35:25 | INFO | __main__ | 6) BUILD feature recipe
+2026-03-26 12:35:25 | INFO | src.features | Building ColumnTransfomer
+2026-03-26 12:35:25 | INFO | __main__ | 7) TRAIN base model pipeline
+2026-03-26 12:35:25 | INFO | src.train | Training model pipeline for regression
+2026-03-26 12:35:25 | INFO | src.train | Model training completed
+2026-03-26 12:35:25 | INFO | __main__ | 8) EVALUATE on validation split
+2026-03-26 12:35:25 | INFO | src.evaluate | Starting evaluation
+2026-03-26 12:35:25 | INFO | src.evaluate | Metrics={'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 12:35:25 | INFO | __main__ | Validation metrics | MAE=438.5683 | RMSE=905.1858 | R2=0.6291
+2026-03-26 12:35:27 | INFO | __main__ | 9) SAVE model artifact
+2026-03-26 12:35:27 | INFO | src.utils | Saving model to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 12:35:27 | INFO | __main__ | 10) INFER on new data file
+2026-03-26 12:35:27 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\inference\Houses_for_rent_inference.csv
+2026-03-26 12:35:27 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 12:35:27 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 12:35:27 | INFO | src.validate | Validating dataframe
+2026-03-26 12:35:27 | INFO | src.infer | Running Inference
+2026-03-26 12:35:27 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 12:35:27 | INFO | __main__ | Done
+2026-03-26 12:35:27 | INFO | __main__ | Wrote processed data: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 12:35:27 | INFO | __main__ | Wrote model artifact: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 12:35:27 | INFO | __main__ | Wrote predictions: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv

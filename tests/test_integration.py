@@ -15,7 +15,8 @@ def test_end_to_end_pipeline_integration(tmp_path: Path):
     # 1) Arrange: tiny deterministic dataset (like your rent use case)
     df = pd.DataFrame(
         {
-            # TODO_STUDENT: Replace these names to match your real config if needed
+            # TODO_STUDENT: Replace these names to match your real config if
+            # needed
             "sq_mt": [50.0, 70.0, np.nan, 40.0],
             "floors": [1, 2, 3, 1],
             "bedrooms": [1, 2, 3, 1],
@@ -50,11 +51,11 @@ def test_end_to_end_pipeline_integration(tmp_path: Path):
     ]
 
     # 4) Clean
-    df_clean = clean_dataframe(df_raw, target_column=target_column,required_columns=required_columns)
+    df_clean = clean_dataframe(df_raw, target_column=target_column)
     save_csv(df_clean, clean_path)
 
-
-    assert validate_dataframe(df_clean, required_columns=required_columns) is True
+    assert validate_dataframe(
+        df_clean, required_columns=required_columns) is True
 
     # 5) Split (tiny and deterministic)
     X = df_clean.drop(columns=[target_column])
@@ -63,12 +64,11 @@ def test_end_to_end_pipeline_integration(tmp_path: Path):
     X_train = X.iloc[:3].copy()
     y_train = y.iloc[:3].copy()
     X_test = X.iloc[3:].copy()
-    y_test = y.iloc[3:].copy()
 
     # 6) Build preprocessor (numeric passthrough + optional categorical lists)
     preprocessor = get_feature_preprocessor(
         bin_cols=[],
-        categorical_cols=[],  # TODO_STUDENT: add categorical cols if you have them as strings
+        categorical_cols=[],
         numeric_cols=list(X.columns),
         n_bins=3,
     )

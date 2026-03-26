@@ -1,0 +1,1 @@
+{"_runtime":0,"_step":2,"_wandb":{"runtime":0},"data/clean_cols":16,"metrics/val/r2":0.6290864490092116,"model_artifact_path":"models/model.joblib","data/raw_cols":16,"data/clean_rows":2074,"metrics/val/mae":438.5683402334601,"data/raw_rows":2074,"entrypoint":"python -m src.main","_timestamp":1.7745239504125435e+09,"metrics/val/rmse":905.1857525365381}

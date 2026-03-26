@@ -1,10 +1,62 @@
 # MLOps Project Configuration
 # This file will eventually control paths, hyperparameters, and toggles.
 
-data:
-  raw: "data/raw/dataset.csv"
-  processed: "data/processed/clean.csv"
+paths:
+  raw_data: "data/raw/Houses_for_rent.csv"
+  processed_data: "data/processed/clean.csv"
+  model_artifact: "models/model.joblib"
+  inference_data: "data/inference/Houses_for_rent_inference.csv"
+  predictions_artifact: "reports/predictions.csv"
+  log_file: "logs/pipeline.log"
 
-train:
+logging:
+  level: INFO
+
+problem:
+  target_column: "rent"
+  problem_type: "regression"
+
+split:
   test_size: 0.2
-  seed: 42
+  random_seed: 42
+
+features:
+  quantile_cols: []
+  categorical_onehot:
+    - "district"
+  numeric_passthrough:
+    - "sq_mt"
+    - "floor"
+    - "bedrooms"
+    - "outer"
+    - "duplex"
+    - "cottage"
+    - "elevator"
+    - "penthouse"
+    - "semidetached"
+  n_bins: 3
+  non_negative: 
+    - "sq_mt"
+    - "bedrooms"
+    - "outer"
+    - "duplex"
+    - "cottage"
+    - "elevator"
+    - "penthouse"
+    - "semidetached"
+wandb:
+  enabled: true
+  project: "madrid-rentals-prediction"
+# Experiment controls
+  name: "00.linear_regression"
+  job_type: "baseline"
+  group: "baselines"
+  tags: ["baseline"]
+  notes: "Baseline linear regression"
+#-----------------------------------------
+  model_artifact_name: "rent_prediction_model"
+  log_processed_data: true
+  log_predictions: true
+
+  log_predictions_table: true
+  predictions_table_rows: 200

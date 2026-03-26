@@ -1,0 +1,26 @@
+{
+  "os": "Windows-11-10.0.26200-SP0",
+  "python": "CPython 3.14.3",
+  "startedAt": "2026-03-26T11:35:21.083178Z",
+  "program": "-m src.main",
+  "git": {
+    "remote": "https://github.com/ricardo-lievano-pedroza/1-mlops-kickoff-repo.git",
+    "commit": "db9076896fda1cf724ccfd248961bedca406e235"
+  },
+  "email": "ricardolievano@hotmail.com",
+  "root": "C:\\Users\\ricar\\OneDrive\\Documentos\\0. Maestria\\5. Term 2\\MLOps\\1-mlops-kickoff-repo",
+  "host": "RLP",
+  "executable": "C:\\Users\\ricar\\anaconda3\\envs\\mlops-student-env\\python.exe",
+  "cpu_count": 8,
+  "cpu_count_logical": 16,
+  "disk": {
+    "/": {
+      "total": "509722226688",
+      "used": "264648171520"
+    }
+  },
+  "memory": {
+    "total": "14861852672"
+  },
+  "writerId": "h4kijw9m79jc91dlx3mo7niivp2jjtwg"
+}

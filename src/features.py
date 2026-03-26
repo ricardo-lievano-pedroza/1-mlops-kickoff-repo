@@ -1,21 +1,4 @@
-"""
-Module: Feature Engineering
----------------------------
-Role: Define the transformation "recipe" (binning, encoding, scaling) to be bundled with the model.
-Input: Configuration (lists of column names).
-Output: scikit-learn ColumnTransformer object.
-"""
-
-"""
-Educational Goal:
-- Why this module exists in an MLOps system: Feature logic must be repeatable across training and inference to avoid training/serving skew.
-- Responsibility (separation of concerns): Define a preprocessing “recipe” without fitting it (fit happens only on train split).
-- Pipeline contract (inputs and outputs): Inputs are column name lists; output is an unfitted ColumnTransformer.
-
-TODO: Replace print statements with standard library logging in a later session
-TODO: Any temporary or hardcoded variable or parameter will be imported from config.yml in a later session
-"""
-
+import logging
 from typing import List, Optional
 
 from sklearn.compose import ColumnTransformer
@@ -23,32 +6,45 @@ from sklearn.preprocessing import RobustScaler, OneHotEncoder, KBinsDiscretizer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 
+logger = logging.getLogger(__name__)
+
 
 def get_feature_preprocessor(
     bin_cols: Optional[List[str]] = None,
     categorical_cols: Optional[List[str]] = None,
     numeric_cols: Optional[List[str]] = None,
     n_bins: int = 3,
-):
+) -> ColumnTransformer:
     """
     Inputs:
-    - quantile_bin_cols: Optional[List[str]] numeric columns to quantile-bin
-    - categorical_onehot_cols: Optional[List[str]] categorical columns to one-hot encode
-    - numeric_passthrough_cols: Optional[List[str]] numeric columns to pass through unchanged
+    - bin_cols: Optional[List[str]] numeric columns to quantile-bin
+    - categorical_cols: Optional[List[str]] categorical columns to one-hot encode
+    - numeric_cols: Optional[List[str]] numeric columns to pass through unchanged
     - n_bins: number of quantile bins for KBinsDiscretizer
+
     Outputs:
     - ColumnTransformer preprocessing object (NOT fitted)
+
     Why this contract matters for reliable ML delivery:
-    - A “recipe-only” preprocessor ensures transforms are fit only on training data inside the Pipeline.
+    - A “recipe-only” - preprocessor - fitting happens later on X_train only.
     """
-    print("[features.get_feature_preprocessor] Building ColumnTransformer feature recipe")  # TODO: replace with logging later
-  
+
+    logger.info("Building ColumnTransfomer")
+
+    if n_bins < 2 and bin_cols is not None:
+        raise ValueError("Fatal: n_bins must be >= 2 for quantile binning")
+
+    if not (bin_cols or categorical_cols or numeric_cols):
+        logger.warning("No feature columns configured — returning passthrough transformer")
+        return ColumnTransformer(transformers=[], remainder="passthrough")
+
     bin_cols = bin_cols or []
     categorical_cols = categorical_cols or []
     numeric_cols = numeric_cols or []
 
     transformers = []
 
+    # Quantile features: Impute -> Quanitle bin
     if bin_cols:
         numeric_bin_pipeline = Pipeline(
             steps=[
@@ -67,6 +63,7 @@ def get_feature_preprocessor(
             ("quantile_bin", numeric_bin_pipeline, bin_cols)
         )
 
+    # Cateogrical features: Impute, One hot encoding
     if categorical_cols:
         try:
             ohe = OneHotEncoder(handle_unknown="ignore", sparse_output=False)
@@ -75,12 +72,15 @@ def get_feature_preprocessor(
 
         categorical_pipeline = Pipeline(
             steps=[
-                ("impute", SimpleImputer(strategy="constant", fill_value="__MISSING__")),
+                ("impute", SimpleImputer(strategy="constant",
+                                         fill_value="__MISSING__")),
                 ("onehot", ohe),
             ]
         )
-        transformers.append(("categorical_onehot", categorical_pipeline, categorical_cols))
+        transformers.append(("categorical_onehot", categorical_pipeline,
+                             categorical_cols))
 
+    # Numerical features: Impute, Scale
     if numeric_cols:
         numeric_pipeline = Pipeline(
             steps=[
@@ -90,5 +90,6 @@ def get_feature_preprocessor(
         )
         transformers.append(("numeric_scaler", numeric_pipeline, numeric_cols))
 
-    preprocessor = ColumnTransformer(transformers=transformers, remainder="drop")
+    preprocessor = ColumnTransformer(transformers=transformers,
+                                     remainder="drop")
     return preprocessor

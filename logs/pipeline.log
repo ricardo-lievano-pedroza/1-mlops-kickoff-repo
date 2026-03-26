@@ -1,0 +1,663 @@
+2026-03-26 08:36:15 | INFO | __main__ | Stating pipeline
+2026-03-26 08:36:15 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 08:36:15 | INFO | src.load_data | Loading raw data from data\raw\Houses_for_rent.csv
+2026-03-26 08:36:15 | INFO | src.utils | Loading CSV from data\raw\Houses_for_rent.csv
+2026-03-26 08:36:15 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 08:36:15 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 08:36:15 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 08:36:15 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 08:36:15 | INFO | __main__ | 3) SAVE processed data
+2026-03-26 08:36:15 | INFO | src.utils | Saving CSV to data\processed\clean.csv
+2026-03-26 08:36:15 | INFO | __main__ | 4) VALIDATE training data
+2026-03-26 08:36:15 | INFO | src.validate | Validating dataframe
+2026-03-26 08:36:15 | INFO | __main__ | 5) SPLIT train/val/test
+2026-03-26 08:36:15 | INFO | __main__ | Split sizes | train=(1555, 15) | test=(519, 15)
+2026-03-26 08:36:15 | INFO | __main__ | Running fail-fast feature configuration checks
+2026-03-26 08:36:15 | INFO | __main__ | 6) BUILD feature recipe
+2026-03-26 08:36:15 | INFO | src.features | Building ColumnTransfomer
+2026-03-26 08:36:15 | INFO | __main__ | 7) TRAIN base model pipeline
+2026-03-26 08:36:15 | INFO | src.train | Training model pipeline for regression
+2026-03-26 08:36:15 | INFO | src.train | Model training completed
+2026-03-26 08:36:15 | INFO | __main__ | 8) EVALUATE on validation split
+2026-03-26 08:36:15 | INFO | src.evaluate | Starting evaluation
+2026-03-26 08:36:15 | INFO | src.evaluate | Metrics={'mae': 429.1715731513108, 'rmse': 845.4059007750092, 'r2': 0.6528447371469486}
+2026-03-26 08:36:15 | INFO | __main__ | Held-out RMSE: {'mae': 429.1715731513108, 'rmse': 845.4059007750092, 'r2': 0.6528447371469486}
+2026-03-26 08:36:15 | INFO | __main__ | 9) SAVE model artifact
+2026-03-26 08:36:15 | INFO | src.utils | Saving model to models\model.joblib
+2026-03-26 08:36:15 | INFO | __main__ | 10) INFER on new data file
+2026-03-26 08:36:15 | INFO | src.utils | Loading CSV from data\inference\Houses_for_rent_inference.csv
+2026-03-26 08:36:15 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 08:36:15 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 08:36:15 | INFO | src.validate | Validating dataframe
+2026-03-26 08:36:15 | INFO | src.infer | Running Inference
+2026-03-26 08:36:15 | INFO | src.utils | Saving CSV to reports\predictions.csv
+2026-03-26 08:36:15 | INFO | __main__ | Done
+2026-03-26 08:36:15 | INFO | __main__ | Wrote processed data: data\processed\clean.csv
+2026-03-26 08:36:15 | INFO | __main__ | Wrote model artifact: models\model.joblib
+2026-03-26 08:36:15 | INFO | __main__ | Wrote predictions: reports\predictions.csv
+2026-03-26 11:03:32 | INFO | __main__ | Stating pipeline
+2026-03-26 11:05:10 | INFO | __main__ | Stating pipeline
+2026-03-26 11:06:10 | INFO | __main__ | Stating pipeline
+2026-03-26 11:06:10 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 11:06:10 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:06:11 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:06:11 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 11:06:11 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 11:08:11 | INFO | __main__ | Stating pipeline
+2026-03-26 11:08:11 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 11:08:11 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:08:11 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:08:11 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 11:08:11 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 11:09:29 | INFO | __main__ | Stating pipeline
+2026-03-26 11:09:29 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 11:09:29 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:09:29 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:09:29 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 11:09:29 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 11:11:19 | INFO | __main__ | Stating pipeline
+2026-03-26 11:11:19 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 11:11:19 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:11:19 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:11:19 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 11:11:19 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 11:12:28 | INFO | __main__ | Stating pipeline
+2026-03-26 11:12:28 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 11:12:28 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:12:28 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:12:28 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 11:12:28 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 11:13:00 | INFO | __main__ | Stating pipeline
+2026-03-26 11:13:00 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 11:13:00 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:13:00 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:13:00 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 11:13:00 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 11:13:38 | INFO | __main__ | Stating pipeline
+2026-03-26 11:13:39 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 11:13:39 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:13:39 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:13:39 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 11:13:39 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 11:17:30 | INFO | __main__ | Stating pipeline
+2026-03-26 11:17:30 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 11:17:30 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:17:30 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 11:17:30 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 11:17:30 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 11:17:30 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 11:17:30 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 11:17:30 | INFO | __main__ | 3) SAVE processed data
+2026-03-26 11:17:30 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 11:17:30 | INFO | __main__ | 4) VALIDATE training data
+2026-03-26 11:17:30 | INFO | src.validate | Validating dataframe
+2026-03-26 11:17:30 | INFO | __main__ | 5) SPLIT train/val/test
+2026-03-26 11:17:30 | INFO | __main__ | Split sizes | train=(1659, 15) | test=(415, 15)
+2026-03-26 11:17:30 | INFO | __main__ | Running fail-fast feature configuration checks
+2026-03-26 11:17:30 | INFO | __main__ | 6) BUILD feature recipe
+2026-03-26 11:17:30 | INFO | src.features | Building ColumnTransfomer
+2026-03-26 11:17:30 | INFO | __main__ | 7) TRAIN base model pipeline
+2026-03-26 11:17:30 | INFO | src.train | Training model pipeline for regression
+2026-03-26 11:17:30 | INFO | src.train | Model training completed
+2026-03-26 11:17:30 | INFO | __main__ | 8) EVALUATE on validation split
+2026-03-26 11:17:30 | INFO | src.evaluate | Starting evaluation
+2026-03-26 11:17:30 | INFO | src.evaluate | Metrics={'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 11:17:30 | INFO | __main__ | Held-out RMSE: {'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 11:17:30 | INFO | __main__ | 9) SAVE model artifact
+2026-03-26 11:17:30 | INFO | src.utils | Saving model to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 11:17:30 | INFO | __main__ | 10) INFER on new data file
+2026-03-26 11:17:30 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\inference\Houses_for_rent_inference.csv
+2026-03-26 11:17:30 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 11:17:30 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 11:17:30 | INFO | src.validate | Validating dataframe
+2026-03-26 11:17:30 | INFO | src.infer | Running Inference
+2026-03-26 11:17:30 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 11:17:30 | INFO | __main__ | Done
+2026-03-26 11:17:30 | INFO | __main__ | Wrote processed data: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 11:17:30 | INFO | __main__ | Wrote model artifact: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 11:17:30 | INFO | __main__ | Wrote predictions: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 12:08:17 | INFO | __main__ | W&B disabled, continuing without experiment tracking
+2026-03-26 12:08:17 | INFO | __main__ | Stating pipeline
+2026-03-26 12:08:17 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 12:08:17 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 12:08:17 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 12:08:17 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 12:08:17 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 12:08:17 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 12:08:17 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 12:08:17 | INFO | __main__ | 3) SAVE processed data
+2026-03-26 12:08:17 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 12:08:17 | INFO | __main__ | 4) VALIDATE training data
+2026-03-26 12:08:17 | INFO | src.validate | Validating dataframe
+2026-03-26 12:08:17 | INFO | __main__ | 5) SPLIT train/val/test
+2026-03-26 12:08:17 | INFO | __main__ | Split sizes | train=(1659, 15) | test=(415, 15)
+2026-03-26 12:08:17 | INFO | __main__ | Running fail-fast feature configuration checks
+2026-03-26 12:08:17 | INFO | __main__ | 6) BUILD feature recipe
+2026-03-26 12:08:17 | INFO | src.features | Building ColumnTransfomer
+2026-03-26 12:08:17 | INFO | __main__ | 7) TRAIN base model pipeline
+2026-03-26 12:08:17 | INFO | src.train | Training model pipeline for regression
+2026-03-26 12:08:17 | INFO | src.train | Model training completed
+2026-03-26 12:08:17 | INFO | __main__ | 8) EVALUATE on validation split
+2026-03-26 12:08:17 | INFO | src.evaluate | Starting evaluation
+2026-03-26 12:08:17 | INFO | src.evaluate | Metrics={'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 12:08:17 | INFO | __main__ | Held-out RMSE: {'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 12:08:17 | INFO | __main__ | 9) SAVE model artifact
+2026-03-26 12:08:17 | INFO | src.utils | Saving model to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 12:08:17 | INFO | __main__ | 10) INFER on new data file
+2026-03-26 12:08:17 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\inference\Houses_for_rent_inference.csv
+2026-03-26 12:08:17 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 12:08:17 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 12:08:17 | INFO | src.validate | Validating dataframe
+2026-03-26 12:08:17 | INFO | src.infer | Running Inference
+2026-03-26 12:08:17 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 12:08:17 | INFO | __main__ | Done
+2026-03-26 12:08:17 | INFO | __main__ | Wrote processed data: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 12:08:17 | INFO | __main__ | Wrote model artifact: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 12:08:17 | INFO | __main__ | Wrote predictions: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 12:19:10 | INFO | __main__ | Initialized W&B run | name=00.linear_regression | project=madrid-rentals-prediction | job_type=baseline
+2026-03-26 12:19:10 | INFO | __main__ | Stating pipeline
+2026-03-26 12:19:10 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 12:19:10 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 12:19:10 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 12:19:10 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 12:19:10 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 12:19:10 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 12:19:10 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 12:19:10 | INFO | __main__ | 3) SAVE processed data
+2026-03-26 12:19:10 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 12:19:10 | INFO | __main__ | 4) VALIDATE training data
+2026-03-26 12:19:10 | INFO | src.validate | Validating dataframe
+2026-03-26 12:19:10 | INFO | __main__ | 5) SPLIT train/val/test
+2026-03-26 12:19:10 | INFO | __main__ | Split sizes | train=(1659, 15) | test=(415, 15)
+2026-03-26 12:19:10 | INFO | __main__ | Running fail-fast feature configuration checks
+2026-03-26 12:19:10 | INFO | __main__ | 6) BUILD feature recipe
+2026-03-26 12:19:10 | INFO | src.features | Building ColumnTransfomer
+2026-03-26 12:19:10 | INFO | __main__ | 7) TRAIN base model pipeline
+2026-03-26 12:19:10 | INFO | src.train | Training model pipeline for regression
+2026-03-26 12:19:10 | INFO | src.train | Model training completed
+2026-03-26 12:19:10 | INFO | __main__ | 8) EVALUATE on validation split
+2026-03-26 12:19:10 | INFO | src.evaluate | Starting evaluation
+2026-03-26 12:19:10 | INFO | src.evaluate | Metrics={'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 12:19:10 | INFO | __main__ | Held-out RMSE: {'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 12:19:10 | ERROR | __main__ | Pipeline failed
+Traceback (most recent call last):
+  File "C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\src\main.py", line 450, in main
+    wandb.log(
+    ~~~~~~~~~^
+        {"tables/metrics_comparison_val": wandb.Table(dataframe=comparison_df)})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 399, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 457, in wrapper_fn
+    return func(self, *args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 444, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 2038, in log
+    self._log(data=data, step=step, commit=commit)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 1749, in _log
+    self._partial_history_callback(data, step, commit)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 399, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_run.py", line 1580, in _partial_history_callback
+    self._backend.interface.publish_partial_history(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        publish_step=not_using_tensorboard,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\interface\interface.py", line 690, in publish_partial_history
+    data = history_dict_to_json(run, data, step=user_step, ignore_copy_err=True)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\data_types\utils.py", line 57, in history_dict_to_json
+    payload[key] = val_to_json(
+                   ~~~~~~~~~~~^
+        run, key, val, namespace=step, ignore_copy_err=ignore_copy_err
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\data_types\utils.py", line 154, in val_to_json
+    _log_table_artifact(val, key, run)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\data_types\utils.py", line 204, in _log_table_artifact
+    art.add(val, entry_name)
+    ~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\artifacts\_validators.py", line 272, in wrapper
+    return method(self, *args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\artifacts\artifact.py", line 1733, in add
+    json.dump(val, f, sort_keys=True)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\json\__init__.py", line 181, in dump
+    for chunk in iterable:
+                 ^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\json\encoder.py", line 444, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\json\encoder.py", line 413, in _iterencode_dict
+    yield from chunks
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\json\encoder.py", line 413, in _iterencode_dict
+    yield from chunks
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\json\encoder.py", line 413, in _iterencode_dict
+    yield from chunks
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\json\encoder.py", line 358, in _iterencode_dict
+    items = sorted(dct.items())
+TypeError: '<' not supported between instances of 'int' and 'str'
+when serializing dict item 'type_map'
+when serializing dict item 'params'
+when serializing dict item 'column_types'
+2026-03-26 12:35:25 | INFO | __main__ | Initialized W&B run | name=00.linear_regression | project=madrid-rentals-prediction | job_type=baseline
+2026-03-26 12:35:25 | INFO | __main__ | Stating pipeline
+2026-03-26 12:35:25 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 12:35:25 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 12:35:25 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 12:35:25 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 12:35:25 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 12:35:25 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 12:35:25 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 12:35:25 | INFO | __main__ | 3) SAVE processed data
+2026-03-26 12:35:25 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 12:35:25 | INFO | __main__ | 4) VALIDATE training data
+2026-03-26 12:35:25 | INFO | src.validate | Validating dataframe
+2026-03-26 12:35:25 | INFO | __main__ | 5) SPLIT train/val/test
+2026-03-26 12:35:25 | INFO | __main__ | Split sizes | train=(1659, 15) | test=(415, 15)
+2026-03-26 12:35:25 | INFO | __main__ | Running fail-fast feature configuration checks
+2026-03-26 12:35:25 | INFO | __main__ | 6) BUILD feature recipe
+2026-03-26 12:35:25 | INFO | src.features | Building ColumnTransfomer
+2026-03-26 12:35:25 | INFO | __main__ | 7) TRAIN base model pipeline
+2026-03-26 12:35:25 | INFO | src.train | Training model pipeline for regression
+2026-03-26 12:35:25 | INFO | src.train | Model training completed
+2026-03-26 12:35:25 | INFO | __main__ | 8) EVALUATE on validation split
+2026-03-26 12:35:25 | INFO | src.evaluate | Starting evaluation
+2026-03-26 12:35:25 | INFO | src.evaluate | Metrics={'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 12:35:25 | INFO | __main__ | Validation metrics | MAE=438.5683 | RMSE=905.1858 | R2=0.6291
+2026-03-26 12:35:27 | INFO | __main__ | 9) SAVE model artifact
+2026-03-26 12:35:27 | INFO | src.utils | Saving model to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 12:35:27 | INFO | __main__ | 10) INFER on new data file
+2026-03-26 12:35:27 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\inference\Houses_for_rent_inference.csv
+2026-03-26 12:35:27 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 12:35:27 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 12:35:27 | INFO | src.validate | Validating dataframe
+2026-03-26 12:35:27 | INFO | src.infer | Running Inference
+2026-03-26 12:35:27 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 12:35:27 | INFO | __main__ | Done
+2026-03-26 12:35:27 | INFO | __main__ | Wrote processed data: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 12:35:27 | INFO | __main__ | Wrote model artifact: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 12:35:27 | INFO | __main__ | Wrote predictions: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 20:09:36 | INFO | __main__ | Initialized W&B run | name=00.linear_regression | project=madrid-rentals-prediction | job_type=baseline
+2026-03-26 20:09:36 | INFO | __main__ | Stating pipeline
+2026-03-26 20:09:36 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 20:09:36 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 20:09:36 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 20:09:36 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 20:09:36 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 20:09:36 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 20:09:36 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 20:09:36 | INFO | __main__ | 3) SAVE processed data
+2026-03-26 20:09:36 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 20:09:36 | INFO | __main__ | 4) VALIDATE training data
+2026-03-26 20:09:36 | INFO | src.validate | Validating dataframe
+2026-03-26 20:09:36 | INFO | __main__ | 5) SPLIT train/val/test
+2026-03-26 20:09:36 | INFO | __main__ | Split sizes | train=(1659, 15) | test=(415, 15)
+2026-03-26 20:09:36 | INFO | __main__ | Running fail-fast feature configuration checks
+2026-03-26 20:09:36 | INFO | __main__ | 6) BUILD feature recipe
+2026-03-26 20:09:36 | INFO | src.features | Building ColumnTransfomer
+2026-03-26 20:09:36 | INFO | __main__ | 7) TRAIN base model pipeline
+2026-03-26 20:09:36 | INFO | src.train | Training model pipeline for regression
+2026-03-26 20:09:36 | INFO | src.train | Model training completed
+2026-03-26 20:09:36 | INFO | __main__ | 8) EVALUATE on validation split
+2026-03-26 20:09:36 | INFO | src.evaluate | Starting evaluation
+2026-03-26 20:09:36 | INFO | src.evaluate | Metrics={'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 20:09:36 | INFO | __main__ | Validation metrics | MAE=438.5683 | RMSE=905.1858 | R2=0.6291
+2026-03-26 20:09:38 | INFO | __main__ | 9) SAVE model artifact
+2026-03-26 20:09:38 | INFO | src.utils | Saving model to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 20:09:38 | INFO | __main__ | 10) INFER on new data file
+2026-03-26 20:09:38 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\inference\Houses_for_rent_inference.csv
+2026-03-26 20:09:38 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 20:09:39 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 20:09:39 | INFO | src.validate | Validating dataframe
+2026-03-26 20:09:39 | INFO | src.infer | Running Inference
+2026-03-26 20:09:39 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 20:09:39 | INFO | __main__ | Done
+2026-03-26 20:09:39 | INFO | __main__ | Wrote processed data: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 20:09:39 | INFO | __main__ | Wrote model artifact: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 20:09:39 | INFO | __main__ | Wrote predictions: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 20:58:04 | INFO | __main__ | Initialized W&B run | name=00.linear_regression | project=madrid-rentals-prediction | job_type=baseline
+2026-03-26 20:58:04 | INFO | __main__ | Stating pipeline
+2026-03-26 20:58:04 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 20:58:04 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 20:58:04 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 20:58:04 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 20:58:04 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 20:58:04 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 20:58:04 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 20:58:04 | INFO | __main__ | 3) SAVE processed data
+2026-03-26 20:58:04 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 20:58:05 | INFO | __main__ | 4) VALIDATE training data
+2026-03-26 20:58:05 | INFO | src.validate | Validating dataframe
+2026-03-26 20:58:05 | INFO | __main__ | 5) SPLIT train/val/test
+2026-03-26 20:58:05 | INFO | __main__ | Split sizes | train=(1659, 15) | test=(415, 15)
+2026-03-26 20:58:05 | INFO | __main__ | Running fail-fast feature configuration checks
+2026-03-26 20:58:05 | INFO | __main__ | 6) BUILD feature recipe
+2026-03-26 20:58:05 | INFO | src.features | Building ColumnTransfomer
+2026-03-26 20:58:05 | INFO | __main__ | 7) TRAIN base model pipeline
+2026-03-26 20:58:05 | INFO | src.train | Training model pipeline for regression
+2026-03-26 20:58:05 | INFO | src.train | Model training completed
+2026-03-26 20:58:05 | INFO | __main__ | 8) EVALUATE on validation split
+2026-03-26 20:58:05 | INFO | src.evaluate | Starting evaluation
+2026-03-26 20:58:05 | INFO | src.evaluate | Metrics={'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 20:58:05 | INFO | __main__ | Validation metrics | MAE=438.5683 | RMSE=905.1858 | R2=0.6291
+2026-03-26 20:58:06 | INFO | __main__ | 9) SAVE model artifact
+2026-03-26 20:58:06 | INFO | src.utils | Saving model to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 20:58:07 | INFO | __main__ | 10) INFER on new data file
+2026-03-26 20:58:07 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\inference\Houses_for_rent_inference.csv
+2026-03-26 20:58:07 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 20:58:07 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 20:58:07 | INFO | src.validate | Validating dataframe
+2026-03-26 20:58:07 | INFO | src.infer | Running Inference
+2026-03-26 20:58:07 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 20:58:07 | INFO | __main__ | Done
+2026-03-26 20:58:07 | INFO | __main__ | Wrote processed data: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 20:58:07 | INFO | __main__ | Wrote model artifact: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 20:58:07 | INFO | __main__ | Wrote predictions: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 21:58:07 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 21:58:07 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 21:58:31 | INFO | src.api | correlation_id=b372eb51-d1c1-45b9-9757-ce1a75ad85c2 path=/docs method=GET status=200 latency_s=0.0012 model_version=model.joblib
+2026-03-26 21:58:31 | INFO | src.api | correlation_id=628e2b8d-5455-44d3-b98a-03105540e5fa path=/openapi.json method=GET status=200 latency_s=0.0354 model_version=model.joblib
+2026-03-26 21:59:12 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 21:59:12 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 21:59:12 | ERROR | src.api | Prediction failed: bad operand type for unary +: 'list'
+Traceback (most recent call last):
+  File "C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\src\api.py", line 338, in predict
+    + list(_require_list(features_cfg, "categorical_onehot"))
+TypeError: bad operand type for unary +: 'list'
+2026-03-26 21:59:12 | INFO | src.api | correlation_id=13e62115-a3ea-4fa3-8031-0febada6fe6a path=/predict method=POST status=500 latency_s=0.1730 model_version=model.joblib
+2026-03-26 22:00:03 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 22:00:03 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 22:00:03 | ERROR | src.api | Prediction failed: bad operand type for unary +: 'list'
+Traceback (most recent call last):
+  File "C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\src\api.py", line 338, in predict
+    + list(_require_list(features_cfg, "categorical_onehot"))
+TypeError: bad operand type for unary +: 'list'
+2026-03-26 22:00:03 | INFO | src.api | correlation_id=5eccd086-3650-4601-b22d-008cfec21194 path=/predict method=POST status=500 latency_s=0.0152 model_version=model.joblib
+2026-03-26 22:00:17 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 22:00:17 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 22:00:17 | ERROR | src.api | Prediction failed: bad operand type for unary +: 'list'
+Traceback (most recent call last):
+  File "C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\src\api.py", line 338, in predict
+    + list(_require_list(features_cfg, "categorical_onehot"))
+TypeError: bad operand type for unary +: 'list'
+2026-03-26 22:00:17 | INFO | src.api | correlation_id=5cad9f91-da01-471b-aa13-e977e8f2e473 path=/predict method=POST status=500 latency_s=0.0139 model_version=model.joblib
+2026-03-26 22:01:00 | INFO | src.api | correlation_id=930e6f58-b244-402b-8e10-0b50091966fe path=/health method=GET status=200 latency_s=0.0182 model_version=model.joblib
+2026-03-26 22:01:01 | INFO | src.api | correlation_id=35a58fcc-c0ba-4cc7-aada-1a5f7ecd9b31 path=/favicon.ico method=GET status=404 latency_s=0.0007 model_version=model.joblib
+2026-03-26 22:01:10 | INFO | src.api | correlation_id=415282e8-2831-479d-b136-d76a2e4d0b1b path=/docs method=GET status=200 latency_s=0.0007 model_version=model.joblib
+2026-03-26 22:01:11 | INFO | src.api | correlation_id=4c5461c7-447c-464b-b3a5-4b917451de20 path=/openapi.json method=GET status=200 latency_s=0.0011 model_version=model.joblib
+2026-03-26 22:02:43 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 22:02:43 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 22:02:43 | ERROR | src.api | Prediction failed: bad operand type for unary +: 'list'
+Traceback (most recent call last):
+  File "C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\src\api.py", line 338, in predict
+    + list(_require_list(features_cfg, "categorical_onehot"))
+TypeError: bad operand type for unary +: 'list'
+2026-03-26 22:02:43 | INFO | src.api | correlation_id=5bc9ce99-6f4f-4a31-8903-85d3077cd238 path=/predict method=POST status=500 latency_s=0.0214 model_version=model.joblib
+2026-03-26 22:06:44 | INFO | src.api | API shutdown complete
+2026-03-26 22:06:53 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:06:53 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:09:55 | INFO | src.api | API shutdown complete
+2026-03-26 22:10:04 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:10:04 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:10:04 | INFO | src.api | API shutdown complete
+2026-03-26 22:10:19 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:10:19 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:10:28 | INFO | src.api | correlation_id=2ab0cfc2-324f-447a-9c35-b11f2de9fbc9 path=/ method=GET status=200 latency_s=0.0102 model_version=model.joblib
+2026-03-26 22:11:13 | INFO | src.api | correlation_id=5d9dd488-8c4d-4d79-bafb-af2173fa896b path=/docs method=GET status=200 latency_s=0.0009 model_version=model.joblib
+2026-03-26 22:11:13 | INFO | src.api | correlation_id=ebf1a2b8-8b7c-446b-af89-4f5a47292724 path=/openapi.json method=GET status=200 latency_s=0.0357 model_version=model.joblib
+2026-03-26 22:11:42 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 22:11:42 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 22:11:42 | ERROR | src.api | Prediction failed: validate_dataframe() got an unexpected keyword argument 'non_negative'
+Traceback (most recent call last):
+  File "C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\src\api.py", line 345, in predict
+    validate_dataframe(
+    ~~~~~~~~~~~~~~~~~~^
+        df=df_clean,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        non_negative=non_negative,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: validate_dataframe() got an unexpected keyword argument 'non_negative'
+2026-03-26 22:11:42 | INFO | src.api | correlation_id=eca4d80f-2138-4062-ab57-f0ec47864dfd path=/predict method=POST status=500 latency_s=0.0348 model_version=model.joblib
+2026-03-26 22:15:17 | INFO | src.api | API shutdown complete
+2026-03-26 22:15:25 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:15:25 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:15:25 | INFO | src.api | API shutdown complete
+2026-03-26 22:15:36 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:15:36 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:15:37 | INFO | src.api | correlation_id=ebd8f629-2d2a-4afa-9d73-0423797156c0 path=/docs method=GET status=200 latency_s=0.0011 model_version=model.joblib
+2026-03-26 22:15:37 | INFO | src.api | correlation_id=055fab9d-6dc7-485a-acc4-d6131ae2af51 path=/openapi.json method=GET status=200 latency_s=0.0346 model_version=model.joblib
+2026-03-26 22:16:00 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 22:16:00 | INFO | src.clean_data | Rows after cleaning 0 rows
+2026-03-26 22:16:00 | INFO | src.validate | Validating dataframe
+2026-03-26 22:16:00 | ERROR | src.api | Validation error: Validation failed: Missing required columns: ['sq.mt']
+2026-03-26 22:16:00 | INFO | src.api | correlation_id=3197805f-ec02-40eb-898b-3d92f12ebbbf path=/predict method=POST status=422 latency_s=0.0567 model_version=model.joblib
+2026-03-26 22:16:38 | INFO | src.api | API shutdown complete
+2026-03-26 22:16:48 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:16:48 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:16:48 | INFO | src.api | correlation_id=9dc8545c-c4a8-4013-a36d-e8189f10e3eb path=/docs method=GET status=200 latency_s=0.0006 model_version=model.joblib
+2026-03-26 22:16:49 | INFO | src.api | correlation_id=993723c6-6afd-4b41-8bcd-067814771787 path=/openapi.json method=GET status=200 latency_s=0.0318 model_version=model.joblib
+2026-03-26 22:17:24 | INFO | src.api | API shutdown complete
+2026-03-26 22:17:32 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:17:32 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:17:32 | INFO | src.api | correlation_id=df8992a7-88bb-4a26-8571-30cb6ccf2f3d path=/docs method=GET status=200 latency_s=0.0009 model_version=model.joblib
+2026-03-26 22:17:32 | INFO | src.api | correlation_id=91b92dfb-1f90-47bc-96a2-0c884cc2deb7 path=/openapi.json method=GET status=200 latency_s=0.0317 model_version=model.joblib
+2026-03-26 22:18:02 | INFO | src.api | API shutdown complete
+2026-03-26 22:18:11 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:18:11 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:18:11 | INFO | src.api | correlation_id=91986f1e-5cae-49a1-ab90-541066bd16d8 path=/docs method=GET status=200 latency_s=0.0010 model_version=model.joblib
+2026-03-26 22:18:11 | INFO | src.api | correlation_id=d8fa8871-3e22-48cd-9489-c8e1d7900c3f path=/openapi.json method=GET status=200 latency_s=0.0325 model_version=model.joblib
+2026-03-26 22:18:26 | INFO | src.api | API shutdown complete
+2026-03-26 22:20:22 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:20:22 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:20:22 | INFO | src.api | correlation_id=929b177e-2089-4dd8-a7a8-490ae55b0c81 path=/docs method=GET status=200 latency_s=0.0021 model_version=model.joblib
+2026-03-26 22:20:22 | INFO | src.api | correlation_id=cce69761-0f12-45ea-b9a8-df2266fac66b path=/docs method=GET status=200 latency_s=0.0030 model_version=model.joblib
+2026-03-26 22:20:22 | INFO | src.api | correlation_id=9e9e0eab-715a-41ef-b87b-2c40333759e8 path=/docs method=GET status=200 latency_s=0.0047 model_version=model.joblib
+2026-03-26 22:20:22 | INFO | src.api | correlation_id=255baa10-7907-45ac-9545-cdd5ba924e3c path=/openapi.json method=GET status=200 latency_s=0.0309 model_version=model.joblib
+2026-03-26 22:21:28 | INFO | src.api | API shutdown complete
+2026-03-26 22:22:29 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:22:29 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:22:32 | INFO | src.api | API shutdown complete
+2026-03-26 22:22:56 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:22:56 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:22:57 | INFO | src.api | correlation_id=d2dc8034-8404-46ee-b222-e0597ce9ff5d path=/docs method=GET status=200 latency_s=0.0011 model_version=model.joblib
+2026-03-26 22:22:57 | INFO | src.api | correlation_id=ba8ec99f-38f5-4e59-8318-89259659731f path=/openapi.json method=GET status=200 latency_s=0.0385 model_version=model.joblib
+2026-03-26 22:23:38 | INFO | src.api | API shutdown complete
+2026-03-26 22:23:51 | INFO | src.api | MODEL_SOURCE=wandb -> fetching model from W&B Registry
+2026-03-26 22:23:51 | ERROR | src.api | Startup failed: API key must have 40+ characters, has 36.
+Traceback (most recent call last):
+  File "C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\src\api.py", line 137, in lifespan
+    wandb.login(key=os.getenv("WANDB_API_KEY"), relogin=True)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_login.py", line 101, in login
+    logged_in, _ = _login(
+                   ~~~~~~^
+        key=key,
+        ^^^^^^^^
+    ...<5 lines>...
+        referrer=referrer or "models",
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_login.py", line 182, in _login
+    auth: wbauth.Auth | None = _use_explicit_key(
+                               ~~~~~~~~~~~~~~~~~^
+        key,
+        ^^^^
+    ...<3 lines>...
+        silent=_silent,
+        ^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\wandb_login.py", line 234, in _use_explicit_key
+    auth = wbauth.AuthApiKey(host=host, api_key=key)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\lib\wbauth\auth.py", line 83, in __init__
+    raise AuthenticationError(problems)
+wandb.errors.errors.AuthenticationError: API key must have 40+ characters, has 36.
+2026-03-26 22:23:55 | INFO | src.api | correlation_id=c59abf4a-38ea-415d-91de-7697c87f1037 path=/docs method=GET status=200 latency_s=0.0009 model_version=startup_error
+2026-03-26 22:23:56 | INFO | src.api | correlation_id=699df170-e996-4825-9b39-9ebfdf1ebfc7 path=/openapi.json method=GET status=200 latency_s=0.0331 model_version=startup_error
+2026-03-26 22:28:16 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:28:16 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:29:33 | INFO | src.api | correlation_id=41ed9339-80e0-4334-9fdf-e10be4eec7ec path=/docs method=GET status=200 latency_s=0.0008 model_version=model.joblib
+2026-03-26 22:29:33 | INFO | src.api | correlation_id=d7e50c1d-6440-42e1-b61f-56353e384c9e path=/openapi.json method=GET status=200 latency_s=0.0298 model_version=model.joblib
+2026-03-26 22:30:59 | INFO | src.api | API shutdown complete
+2026-03-26 22:31:06 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:31:06 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:32:04 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:32:04 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:32:33 | INFO | src.api | correlation_id=939682ff-80fa-478b-ae87-755c22c20260 path=/docs method=GET status=200 latency_s=0.0009 model_version=model.joblib
+2026-03-26 22:32:33 | INFO | src.api | correlation_id=cc3095eb-c5fd-4a4b-aebe-b12935f5d1a8 path=/openapi.json method=GET status=200 latency_s=0.0337 model_version=model.joblib
+2026-03-26 22:33:42 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 22:33:42 | INFO | src.clean_data | Rows after cleaning: 1 rows remaining, 0 dropped
+2026-03-26 22:33:42 | INFO | src.validate | Validating dataframe
+2026-03-26 22:33:42 | INFO | src.infer | Running Inference
+2026-03-26 22:33:42 | ERROR | src.api | Validation error: columns are missing: {'sq.mt'}
+2026-03-26 22:33:42 | INFO | src.api | correlation_id=e120c818-c44e-4b55-b1a2-2d523a05a023 path=/predict method=POST status=422 latency_s=0.0895 model_version=model.joblib
+2026-03-26 22:34:25 | INFO | src.api | correlation_id=2170fec5-bdb2-46a1-bf86-3f9cc644e0ad path=/docs method=GET status=200 latency_s=0.0008 model_version=model.joblib
+2026-03-26 22:34:26 | INFO | src.api | correlation_id=65ebe6bc-55da-4b15-acb6-63b212957466 path=/openapi.json method=GET status=200 latency_s=0.0009 model_version=model.joblib
+2026-03-26 22:34:28 | INFO | src.api | correlation_id=e983776e-de22-42f0-8f61-6869b1565034 path=/health method=GET status=200 latency_s=0.0030 model_version=model.joblib
+2026-03-26 22:35:14 | INFO | src.api | API shutdown complete
+2026-03-26 22:35:23 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:35:23 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:35:23 | INFO | src.api | correlation_id=0ded0c0e-7c41-4222-a086-a8dbc60ecc70 path=/docs method=GET status=200 latency_s=0.0010 model_version=model.joblib
+2026-03-26 22:35:23 | INFO | src.api | correlation_id=870f2b2a-9116-4e16-adf9-e437acfb4623 path=/openapi.json method=GET status=200 latency_s=0.0366 model_version=model.joblib
+2026-03-26 22:35:48 | INFO | src.api | API shutdown complete
+2026-03-26 22:35:55 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:35:55 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:35:55 | INFO | src.api | API shutdown complete
+2026-03-26 22:36:13 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:36:13 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:36:39 | INFO | src.api | correlation_id=d8a7782c-e0bd-4aff-87af-acdd7e99a966 path=/docs method=GET status=200 latency_s=0.0013 model_version=model.joblib
+2026-03-26 22:36:39 | INFO | src.api | correlation_id=136a344c-73b8-4f60-9df3-2d35107ac4cd path=/openapi.json method=GET status=200 latency_s=0.0360 model_version=model.joblib
+2026-03-26 22:38:11 | INFO | src.api | correlation_id=94756362-fb36-4bdb-88bd-9a63e431e0ff path=/docs method=GET status=200 latency_s=0.0007 model_version=model.joblib
+2026-03-26 22:38:11 | INFO | src.api | correlation_id=bf44ae44-c584-476e-ac0e-d51b86dabb42 path=/openapi.json method=GET status=200 latency_s=0.0011 model_version=model.joblib
+2026-03-26 22:38:35 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 22:38:35 | INFO | src.clean_data | Rows after cleaning: 1 rows remaining, 0 dropped
+2026-03-26 22:38:35 | INFO | src.validate | Validating dataframe
+2026-03-26 22:38:35 | INFO | src.infer | Running Inference
+2026-03-26 22:38:35 | ERROR | src.api | Validation error: columns are missing: {'sq.mt'}
+2026-03-26 22:38:35 | INFO | src.api | correlation_id=ec9b47ba-47f2-46c8-8eec-180dea60810a path=/predict method=POST status=422 latency_s=0.0386 model_version=model.joblib
+2026-03-26 22:42:11 | INFO | src.api | API shutdown complete
+2026-03-26 22:42:20 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:42:20 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:42:44 | INFO | src.api | correlation_id=4e7c5990-bce9-4bf6-8920-24e7d9d45679 path=/docs method=GET status=200 latency_s=0.0012 model_version=model.joblib
+2026-03-26 22:42:44 | INFO | src.api | correlation_id=d4e60300-a0fe-499f-a3f7-a6635a48d8ea path=/openapi.json method=GET status=200 latency_s=0.0391 model_version=model.joblib
+2026-03-26 22:43:19 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:43:19 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:44:03 | INFO | src.api | correlation_id=fef0c4b7-c8b5-4046-a5d7-1c89db835741 path=/docs method=GET status=200 latency_s=0.0011 model_version=model.joblib
+2026-03-26 22:44:03 | INFO | src.api | correlation_id=faf60564-c93f-4325-84f1-770ad89879b0 path=/openapi.json method=GET status=200 latency_s=0.0376 model_version=model.joblib
+2026-03-26 22:44:20 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 22:44:20 | INFO | src.clean_data | Rows after cleaning: 1 rows remaining, 0 dropped
+2026-03-26 22:44:20 | INFO | src.validate | Validating dataframe
+2026-03-26 22:44:20 | INFO | src.infer | Running Inference
+2026-03-26 22:44:20 | ERROR | src.api | Validation error: columns are missing: {'sq.mt'}
+2026-03-26 22:44:20 | INFO | src.api | correlation_id=14ab40b9-fd97-4903-9a19-236906dbebcc path=/predict method=POST status=422 latency_s=0.0352 model_version=model.joblib
+2026-03-26 22:45:17 | INFO | __main__ | Initialized W&B run | name=00.linear_regression | project=madrid-rentals-prediction | job_type=baseline
+2026-03-26 22:45:17 | INFO | __main__ | Stating pipeline
+2026-03-26 22:45:17 | INFO | __main__ | 1) LOAD raw data
+2026-03-26 22:45:17 | INFO | src.load_data | Loading raw data from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 22:45:17 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\raw\Houses_for_rent.csv
+2026-03-26 22:45:17 | INFO | src.load_data | Loaded dataframe shape: (2074, 16)
+2026-03-26 22:45:17 | INFO | __main__ | 2) CLEAN training data
+2026-03-26 22:45:17 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 22:45:17 | INFO | src.clean_data | Rows after cleaning: 2074 rows remaining, 0 dropped
+2026-03-26 22:45:17 | INFO | __main__ | 3) SAVE processed data
+2026-03-26 22:45:17 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 22:45:17 | INFO | __main__ | 4) VALIDATE training data
+2026-03-26 22:45:17 | INFO | src.validate | Validating dataframe
+2026-03-26 22:45:17 | INFO | __main__ | 5) SPLIT train/val/test
+2026-03-26 22:45:17 | INFO | __main__ | Split sizes | train=(1659, 15) | test=(415, 15)
+2026-03-26 22:45:17 | INFO | __main__ | Running fail-fast feature configuration checks
+2026-03-26 22:45:17 | INFO | __main__ | 6) BUILD feature recipe
+2026-03-26 22:45:17 | INFO | src.features | Building ColumnTransfomer
+2026-03-26 22:45:17 | INFO | __main__ | 7) TRAIN base model pipeline
+2026-03-26 22:45:17 | INFO | src.train | Training model pipeline for regression
+2026-03-26 22:45:17 | INFO | src.train | Model training completed
+2026-03-26 22:45:17 | INFO | __main__ | 8) EVALUATE on validation split
+2026-03-26 22:45:17 | INFO | src.evaluate | Starting evaluation
+2026-03-26 22:45:17 | INFO | src.evaluate | Metrics={'mae': 438.5683402334601, 'rmse': 905.1857525365381, 'r2': 0.6290864490092116}
+2026-03-26 22:45:17 | INFO | __main__ | Validation metrics | MAE=438.5683 | RMSE=905.1858 | R2=0.6291
+2026-03-26 22:45:19 | INFO | __main__ | 9) SAVE model artifact
+2026-03-26 22:45:19 | INFO | src.utils | Saving model to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:45:20 | INFO | __main__ | 10) INFER on new data file
+2026-03-26 22:45:20 | INFO | src.utils | Loading CSV from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\inference\Houses_for_rent_inference.csv
+2026-03-26 22:45:20 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 22:45:20 | INFO | src.clean_data | Rows after cleaning: 15 rows remaining, 0 dropped
+2026-03-26 22:45:20 | INFO | src.validate | Validating dataframe
+2026-03-26 22:45:20 | INFO | src.infer | Running Inference
+2026-03-26 22:45:20 | INFO | src.utils | Saving CSV to C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 22:45:20 | INFO | __main__ | Done
+2026-03-26 22:45:20 | INFO | __main__ | Wrote processed data: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\data\processed\clean.csv
+2026-03-26 22:45:20 | INFO | __main__ | Wrote model artifact: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:45:20 | INFO | __main__ | Wrote predictions: C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\reports\predictions.csv
+2026-03-26 22:45:37 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:45:37 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 22:45:39 | INFO | src.api | correlation_id=8b20773a-cf2d-4373-a460-769ff4c390d4 path=/docs method=GET status=200 latency_s=0.0009 model_version=model.joblib
+2026-03-26 22:45:39 | INFO | src.api | correlation_id=fcb967f8-4cb1-4045-a994-f3bc6adb1051 path=/openapi.json method=GET status=200 latency_s=0.0360 model_version=model.joblib
+2026-03-26 22:46:03 | INFO | src.clean_data | Cleaning dataframe
+2026-03-26 22:46:04 | INFO | src.clean_data | Rows after cleaning: 1 rows remaining, 0 dropped
+2026-03-26 22:46:04 | INFO | src.validate | Validating dataframe
+2026-03-26 22:46:04 | INFO | src.infer | Running Inference
+2026-03-26 22:46:04 | INFO | src.api | correlation_id=daa138b6-08fb-42b6-9877-47ccc743d0d6 path=/predict method=POST status=200 latency_s=0.0698 model_version=model.joblib
+2026-03-26 22:46:04 | ERROR | src.api | Failed to flush logs to W&B: WANDB_API_KEY invalid: API key must have 40+ characters, has 36.
+2026-03-26 22:58:56 | INFO | src.api | MODEL_SOURCE=local -> using local model artifact
+2026-03-26 22:58:56 | INFO | src.api | Startup complete, model loaded from C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\models\model.joblib
+2026-03-26 23:00:07 | INFO | src.api | MODEL_SOURCE=wandb -> fetching model from W&B Registry
+2026-03-26 23:00:10 | ERROR | src.api | Startup failed: project 'madrid-rentals-prediction' not found under entity 'ricardolievano'
+Traceback (most recent call last):
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\apis\normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\apis\public\api.py", line 1510, in _artifact
+    artifact = Artifact._from_name(
+        path=path,
+        client=self.client,
+        enable_tracking=enable_tracking,
+    )
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\artifacts\artifact.py", line 325, in _from_name
+    return cls._membership_from_name(path=path, client=client)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\artifacts\artifact.py", line 305, in _membership_from_name
+    raise ValueError(msg)
+ValueError: project 'madrid-rentals-prediction' not found under entity 'ricardolievano'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ricar\OneDrive\Documentos\0. Maestria\5. Term 2\MLOps\1-mlops-kickoff-repo\src\api.py", line 139, in lifespan
+    artifact = api.artifact(artifact_path)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\apis\normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\apis\public\api.py", line 1568, in artifact
+    return self._artifact(name=name, type=type, enable_tracking=True)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\apis\normalize.py", line 82, in wrapper
+    raise CommError(message, err).with_traceback(sys.exc_info()[2])
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\apis\normalize.py", line 28, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\apis\public\api.py", line 1510, in _artifact
+    artifact = Artifact._from_name(
+        path=path,
+        client=self.client,
+        enable_tracking=enable_tracking,
+    )
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\artifacts\artifact.py", line 325, in _from_name
+    return cls._membership_from_name(path=path, client=client)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ricar\anaconda3\envs\mlops-student-env\Lib\site-packages\wandb\sdk\artifacts\artifact.py", line 305, in _membership_from_name
+    raise ValueError(msg)
+wandb.errors.errors.CommError: project 'madrid-rentals-prediction' not found under entity 'ricardolievano'
+2026-03-26 23:03:45 | INFO | src.api | API shutdown complete
+2026-03-26 23:06:16 | INFO | src.api | MODEL_SOURCE=wandb -> fetching model from W&B Registry
+2026-03-26 23:06:20 | INFO | src.api | Downloaded model from W&B: ricardolievano-ie-university/madrid-rentals-prediction/rent_prediction_model:prod
+2026-03-26 23:06:20 | INFO | src.api | Startup complete, model loaded from W&B artifact ricardolievano-ie-university/madrid-rentals-prediction/rent_prediction_model:prod
+2026-03-26 23:06:29 | INFO | src.api | API shutdown complete

@@ -1,25 +1,95 @@
+import logging
 from pathlib import Path
 import pandas as pd
 import joblib
 
+logger = logging.getLogger(__name__)
+
 
 def load_csv(filepath: Path) -> pd.DataFrame:
-    print(f"[utils.load_csv] Loading CSV from: {filepath}")
-    return pd.read_csv(filepath)
+    """
+    Inputs:
+    - filepath: CSV path
+    Outputs:
+    - df: Loaded DataFrame
+    Why this contract matters for reliable ML delivery:
+    - Standardized parsing reduces fragile one-off fixes and improves reproducibility
+    """
+    logger.info(f"Loading CSV from {filepath}")
+
+    if not isinstance(filepath, Path):
+        raise TypeError(
+            f"filepath must be a pathlib.Path, got type={type(filepath)}")
+
+        # Add this block ↓
+    if not filepath.exists():
+        raise FileNotFoundError(
+            f"CSV file not found at {filepath}."
+        )
+
+    if filepath.exists() and not filepath.is_file():
+        raise ValueError(
+            f"CSV Parsing Error: {filepath} exists but is not a file")
+
+    try:
+        df = pd.read_csv(filepath, sep=",")
+    except Exception as e:
+        raise ValueError(
+            f"CSV Parsing Error: Failed to read {filepath}. "
+            "Check delimiter, encoding, or file corruption. "
+            f"Original pandas error: {e}"
+        )
+
+    return df
 
 
 def save_csv(df: pd.DataFrame, filepath: Path) -> None:
-    print(f"[utils.save_csv] Saving CSV to: {filepath}")
+    """
+    Inputs:
+    - df: DataFrame to save
+    - filepath: Output path
+    Outputs:
+    - None
+    Why this contract matters for reliable ML delivery:
+    - Deterministic saving (index=False) prevents alignment bugs downstream
+    """
+    logger.info(f"Saving CSV to {filepath}")
+
     filepath.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(filepath, index=False)
 
 
 def save_model(model, filepath: Path) -> None:
-    print(f"[utils.save_model] Saving model to: {filepath}")
+    """
+    Inputs:
+    - model: Trained estimator or pipeline
+    - filepath: Output path
+    Outputs:
+    - None
+    Why this contract matters for reliable ML delivery:
+    - Persisted artifacts enable reproducible inference and auditability
+    """
+    logger.info(f"Saving model to {filepath}")
+
     filepath.parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(model, filepath)
 
 
 def load_model(filepath: Path):
-    print(f"[utils.load_model] Loading model from: {filepath}")
+    """
+    Inputs:
+    - filepath: Model artifact path
+    Outputs:
+    - model: Deserialized estimator
+    Why this contract matters for reliable ML delivery:
+    - Fail fast on missing artifacts prevents cryptic inference crashes
+    """
+    logger.info(f"Loading model from {filepath}")
+
+    if not filepath.exists():
+        raise FileNotFoundError(
+            f"Model artifact not found at {filepath}. "
+            "Run the training pipeline first to generate models/model.joblib"
+        )
+
     return joblib.load(filepath)
