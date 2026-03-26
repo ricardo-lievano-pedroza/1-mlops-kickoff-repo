@@ -8,8 +8,21 @@ dependencies:
   - numpy
   - scikit-learn
   - joblib
+  - matplotlib
+  - seaborn
+  - shap
+  - lime
   - jupyter
   - ipykernel
   - pytest
   - pytest-cov
-  - matplotlib
+  - pyyaml
+  - python-dotenv
+  - joblib
+  - wandb
+  - fastapi
+  - uvicorn
+  - pydantic
+  - httpx
+  - conda-lock
+  - pip
